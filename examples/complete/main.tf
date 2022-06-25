@@ -61,6 +61,19 @@ module "kms_complete" {
   tags = local.tags
 }
 
+module "kms_external" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "External key example"
+  is_enabled              = true
+  key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  multi_region            = false
+  valid_to                = "2085-04-12T23:20:50.52Z"
+
+  tags = local.tags
+}
+
 module "kms_default" {
   source = "../.."
 

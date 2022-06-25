@@ -14,6 +14,12 @@ variable "tags" {
 # Key
 ################################################################################
 
+variable "create_external" {
+  description = "Determines whether an external CMK (externally provided material) will be created or a standard CMK (AWS provided material)"
+  type        = bool
+  default     = false
+}
+
 variable "bypass_policy_lockout_safety_check" {
   description = "A flag to indicate whether to bypass the key policy lockout safety check. Setting this value to true increases the risk that the KMS key becomes unmanageable"
   type        = bool
@@ -50,6 +56,12 @@ variable "is_enabled" {
   default     = null
 }
 
+variable "key_material_base64" {
+  description = "Base64 encoded 256-bit symmetric encryption key material to import. The CMK is permanently associated with this key material. External key only"
+  type        = string
+  default     = null
+}
+
 variable "key_usage" {
   description = "Specifies the intended use of the key. Valid values: `ENCRYPT_DECRYPT` or `SIGN_VERIFY`. Defaults to `ENCRYPT_DECRYPT`"
   type        = string
@@ -64,6 +76,12 @@ variable "multi_region" {
 
 variable "policy" {
   description = "A valid policy JSON document. Although this is a key policy, not an IAM policy, an `aws_iam_policy_document`, in the form that designates a principal, can be used"
+  type        = string
+  default     = null
+}
+
+variable "valid_to" {
+  description = "Time at which the imported key material expires. When the key material expires, AWS KMS deletes the key material and the CMK becomes unusable. If not specified, key material does not expire"
   type        = string
   default     = null
 }
