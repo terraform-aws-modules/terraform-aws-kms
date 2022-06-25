@@ -3,14 +3,14 @@ provider "aws" {
 }
 
 locals {
-  region = "us-east-1"
-  name   = "kms-ex-${replace(basename(path.cwd), "_", "-")}"
-  me     = data.aws_caller_identity.current.arn
+  region           = "us-east-1"
+  name             = "kms-ex-${replace(basename(path.cwd), "_", "-")}"
+  current_identity = data.aws_caller_identity.current.arn
 
   tags = {
     Name       = local.name
     Example    = "complete"
-    Repository = "https://github.com/clowdhaus/terraform-aws-kms"
+    Repository = "https://github.com/terraform-aws-modules/terraform-aws-kms"
   }
 }
 
@@ -32,14 +32,14 @@ module "kms_complete" {
 
   # Policy
   enable_default_policy                  = true
-  key_owners                             = [local.me]
-  key_administrators                     = [local.me]
-  key_users                              = [local.me]
-  key_service_users                      = [local.me]
-  key_symmetric_encryption_users         = [local.me]
-  key_hmac_users                         = [local.me]
-  key_asymmetric_public_encryption_users = [local.me]
-  key_asymmetric_sign_verify_users       = [local.me]
+  key_owners                             = [local.current_identity]
+  key_administrators                     = [local.current_identity]
+  key_users                              = [local.current_identity]
+  key_service_users                      = [local.current_identity]
+  key_symmetric_encryption_users         = [local.current_identity]
+  key_hmac_users                         = [local.current_identity]
+  key_asymmetric_public_encryption_users = [local.current_identity]
+  key_asymmetric_sign_verify_users       = [local.current_identity]
 
   # Aliases
   aliases                 = ["one", "foo/bar"]

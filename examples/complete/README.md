@@ -2,7 +2,10 @@
 
 Configuration in this directory creates:
 
-- <XXX>
+- Complete KMS key example with key policy, aliases, and grants
+- External KMS key example
+- Default KMS key example with default policy
+- Disable KMS key example
 
 ## Usage
 
@@ -80,4 +83,4 @@ No inputs.
 | <a name="output_external_key_policy"></a> [external\_key\_policy](#output\_external\_key\_policy) | The IAM resource policy set on the key |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
-Apache-2.0 Licensed. See [LICENSE](https://github.com/clowdhaus/terraform-aws-kms/blob/main/LICENSE).
+Apache-2.0 Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-aws-kms/blob/master/LICENSE).

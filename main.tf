@@ -61,7 +61,23 @@ data "aws_iam_policy_document" "this" {
 
       principals {
         type        = "AWS"
-        identifiers = coalescelist(var.key_owners, ["arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"])
+        identifiers = ["arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"]
+      }
+    }
+  }
+
+  # Key owner - all key operations
+  dynamic "statement" {
+    for_each = var.enable_default_policy ? [1] : []
+
+    content {
+      sid       = "KeyOwner"
+      actions   = ["kms:*"]
+      resources = ["*"]
+
+      principals {
+        type        = "AWS"
+        identifiers = var.key_owners
       }
     }
   }

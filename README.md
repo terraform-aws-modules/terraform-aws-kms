@@ -2,13 +2,122 @@
 
 Terraform module which creates AWS KMS resources.
 
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
+
 ## Usage
 
-See [`examples`](https://github.com/clowdhaus/terraform-aws-kms/tree/main/examples) directory for working examples to reference:
+See [`examples`](https://github.com/terraform-aws-modules/terraform-aws-kms/tree/master/examples) directory for working examples to reference:
+
+### Service
+
+Reference usage for EC2 AutoScaling service linked role to launch encrypted EBS volumes:
 
 ```hcl
 module "kms" {
-  source = "clowdhaus/kms/aws"
+  source = "terraform-aws-modules/kms/aws"
+
+  description = "EC2 AutoScaling key usage"
+  key_usage   = "ENCRYPT_DECRYPT"
+
+  # Policy
+  key_administrators = ["arn:aws:iam::012345678901:role/admin"]
+  key_users          = ["arn:aws:iam::012345678901:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
+  key_service_users  = ["arn:aws:iam::012345678901:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
+
+  # Aliases
+  aliases = ["mycompany/ebs"]
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
+```
+
+### External Key
+
+Reference usage for external CMK (externally provided encryption material):
+
+```hcl
+module "kms" {
+  source = "terraform-aws-modules/kms/aws"
+
+  description         = "External key example"
+  key_material_base64 = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  valid_to            = "2085-04-12T23:20:50.52Z"
+
+  # Policy
+  key_owners         = ["arn:aws:iam::012345678901:role/owner"]
+  key_administrators = ["arn:aws:iam::012345678901:role/admin"]
+  key_users          = ["arn:aws:iam::012345678901:role/user"]
+  key_service_users  = ["arn:aws:iam::012345678901:role/ec2-role"]
+
+  # Aliases
+  aliases                 = ["mycompany/external"]
+  aliases_use_name_prefix = true
+
+  # Grants
+  grants = {
+    lambda = {
+      grantee_principal = "arn:aws:iam::012345678901:role/lambda-function"
+      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+      constraints = {
+        encryption_context_equals = {
+          Department = "Finance"
+        }
+      }
+    }
+  }
+
+  tags = {
+    Terraform   = "true"
+    Environment = "dev"
+  }
+}
+```
+
+### Reference
+
+Reference usage showing available configurations.
+
+```hcl
+module "kms" {
+  source = "terraform-aws-modules/kms/aws"
+
+  description             = "Complete key example showing various configurations available"
+  deletion_window_in_days = 7
+  enable_key_rotation     = true
+  is_enabled              = true
+  key_usage               = "ENCRYPT_DECRYPT"
+  multi_region            = false
+
+  # Policy
+  enable_default_policy                  = true
+  key_owners                             = ["arn:aws:iam::012345678901:role/owner"]
+  key_administrators                     = ["arn:aws:iam::012345678901:role/admin"]
+  key_users                              = ["arn:aws:iam::012345678901:role/user"]
+  key_service_users                      = ["arn:aws:iam::012345678901:role/ec2-role"]
+  key_symmetric_encryption_users         = ["arn:aws:iam::012345678901:role/symmetric-user"]
+  key_hmac_users                         = ["arn:aws:iam::012345678901:role/hmac-user"]
+  key_asymmetric_public_encryption_users = ["arn:aws:iam::012345678901:role/asymmetric-public-user"]
+  key_asymmetric_sign_verify_users       = ["arn:aws:iam::012345678901:role/sign-verify-user"]
+
+  # Aliases
+  aliases                 = ["one", "foo/bar"]
+  aliases_use_name_prefix = true
+
+  # Grants
+  grants = {
+    lambda = {
+      grantee_principal = "arn:aws:iam::012345678901:role/lambda-function"
+      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+      constraints = {
+        encryption_context_equals = {
+          Department = "Finance"
+        }
+      }
+    }
+  }
 
   tags = {
     Terraform   = "true"
@@ -19,9 +128,9 @@ module "kms" {
 
 ## Examples
 
-Examples codified under the [`examples`](https://github.com/clowdhaus/terraform-aws-kms/tree/main/examples) are intended to give users references for how to use the module(s) as well as testing/validating changes to the source code of the module. If contributing to the project, please be sure to make any appropriate updates to the relevant examples to allow maintainers to test your changes and to keep the examples up to date for users. Thank you!
+Examples codified under the [`examples`](https://github.com/terraform-aws-modules/terraform-aws-kms/tree/master/examples) are intended to give users references for how to use the module(s) as well as testing/validating changes to the source code of the module. If contributing to the project, please be sure to make any appropriate updates to the relevant examples to allow maintainers to test your changes and to keep the examples up to date for users. Thank you!
 
-- [Complete](https://github.com/clowdhaus/terraform-aws-kms/tree/main/examples/complete)
+- [Complete](https://github.com/terraform-aws-modules/terraform-aws-kms/tree/master/examples/complete)
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
@@ -74,7 +183,7 @@ No modules.
 | <a name="input_key_asymmetric_sign_verify_users"></a> [key\_asymmetric\_sign\_verify\_users](#input\_key\_asymmetric\_sign\_verify\_users) | A list of IAM ARNs for [key asymmetric sign and verify users](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-users-crypto) | `list(string)` | `[]` | no |
 | <a name="input_key_hmac_users"></a> [key\_hmac\_users](#input\_key\_hmac\_users) | A list of IAM ARNs for [key HMAC users](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-users-crypto) | `list(string)` | `[]` | no |
 | <a name="input_key_material_base64"></a> [key\_material\_base64](#input\_key\_material\_base64) | Base64 encoded 256-bit symmetric encryption key material to import. The CMK is permanently associated with this key material. External key only | `string` | `null` | no |
-| <a name="input_key_owners"></a> [key\_owners](#input\_key\_owners) | A list of IAM ARNs for those who will have full key permissions (`kms:*`). `enable_default_policy` must be `true` to utilize | `list(string)` | `[]` | no |
+| <a name="input_key_owners"></a> [key\_owners](#input\_key\_owners) | A list of IAM ARNs for those who will have full key permissions (`kms:*`) | `list(string)` | `[]` | no |
 | <a name="input_key_service_users"></a> [key\_service\_users](#input\_key\_service\_users) | A list of IAM ARNs for [key service users](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-service-integration) | `list(string)` | `[]` | no |
 | <a name="input_key_symmetric_encryption_users"></a> [key\_symmetric\_encryption\_users](#input\_key\_symmetric\_encryption\_users) | A list of IAM ARNs for [key symmetric encryption users](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-users-crypto) | `list(string)` | `[]` | no |
 | <a name="input_key_usage"></a> [key\_usage](#input\_key\_usage) | Specifies the intended use of the key. Valid values: `ENCRYPT_DECRYPT` or `SIGN_VERIFY`. Defaults to `ENCRYPT_DECRYPT` | `string` | `null` | no |
@@ -102,4 +211,4 @@ No modules.
 
 ## License
 
-Apache-2.0 Licensed. See [LICENSE](https://github.com/clowdhaus/terraform-aws-kms/blob/main/LICENSE).
+Apache-2.0 Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-aws-kms/blob/master/LICENSE).

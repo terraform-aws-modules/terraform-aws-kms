@@ -93,7 +93,7 @@ variable "enable_default_policy" {
 }
 
 variable "key_owners" {
-  description = "A list of IAM ARNs for those who will have full key permissions (`kms:*`). `enable_default_policy` must be `true` to utilize"
+  description = "A list of IAM ARNs for those who will have full key permissions (`kms:*`)"
   type        = list(string)
   default     = []
 }
