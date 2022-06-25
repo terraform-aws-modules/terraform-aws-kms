@@ -24,6 +24,9 @@ resource "aws_kms_key" "this" {
 data "aws_iam_policy_document" "this" {
   count = var.create ? 1 : 0
 
+  source_policy_documents   = var.source_policy_documents
+  override_policy_documents = var.override_policy_documents
+
   # Default policy - account wide access to all key operations
   dynamic "statement" {
     for_each = var.enable_default_policy ? [1] : []
