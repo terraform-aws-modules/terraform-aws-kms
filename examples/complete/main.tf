@@ -4,51 +4,92 @@ provider "aws" {
 
 locals {
   region = "us-east-1"
-  name   = "<TODO>-ex-${replace(basename(path.cwd), "_", "-")}"
+  name   = "kms-ex-${replace(basename(path.cwd), "_", "-")}"
+  me     = data.aws_caller_identity.current.arn
 
   tags = {
     Name       = local.name
-    Example    = local.name
-    Repository = "https://github.com/clowdhaus/terraform-aws-<TODO>"
+    Example    = "complete"
+    Repository = "https://github.com/clowdhaus/terraform-aws-kms"
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 ################################################################################
-# <TODO_EXPANDED> Module
+# KMS Module
 ################################################################################
 
-module "<TODO_UNDER>_disabled" {
+module "kms_complete" {
   source = "../.."
 
-  create = false
-}
+  deletion_window_in_days = 7
+  description             = "Complete key example showing various configurations available"
+  enable_key_rotation     = false
+  is_enabled              = true
+  key_usage               = "ENCRYPT_DECRYPT"
+  multi_region            = false
 
-module "<TODO_UNDER>" {
-  source = "../.."
+  # Policy
+  enable_default_policy                  = true
+  key_owners                             = [local.me]
+  key_administrators                     = [local.me]
+  key_users                              = [local.me]
+  key_service_users                      = [local.me]
+  key_symmetric_encryption_users         = [local.me]
+  key_hmac_users                         = [local.me]
+  key_asymmetric_public_encryption_users = [local.me]
+  key_asymmetric_sign_verify_users       = [local.me]
 
-  create = false
+  # Aliases
+  aliases                 = ["one", "foo/bar"]
+  aliases_use_name_prefix = true
+
+  # Grants
+  grants = {
+    lambda = {
+      grantee_principal = aws_iam_role.lambda.arn
+      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+      constraints = {
+        encryption_context_equals = {
+          Department = "Finance"
+        }
+      }
+    }
+  }
 
   tags = local.tags
+}
+
+module "kms_default" {
+  source = "../.."
+
+  tags = local.tags
+}
+
+module "kms_disabled" {
+  source = "../.."
+
+  create = false
 }
 
 ################################################################################
 # Supporting Resources
 ################################################################################
 
-module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "~> 3.0"
+resource "aws_iam_role" "lambda" {
+  name_prefix = local.name
 
-  name = local.name
-  cidr = "10.99.0.0/18"
-
-  azs             = ["${local.region}a", "${local.region}b", "${local.region}c"]
-  public_subnets  = ["10.99.0.0/24", "10.99.1.0/24", "10.99.2.0/24"]
-  private_subnets = ["10.99.3.0/24", "10.99.4.0/24", "10.99.5.0/24"]
-
-  enable_nat_gateway      = false
-  single_nat_gateway      = true
-  map_public_ip_on_launch = false
-
-  tags = local.tags
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "sts:AssumeRole"
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
 }
