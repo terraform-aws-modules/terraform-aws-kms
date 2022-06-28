@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.0...v1.0.1) (2022-06-28)
+
+
+### Bug Fixes
+
+* Reduce required versions for Terraform and AWS provider ([#1](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/1)) ([f80bc66](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/f80bc665e11d7aabacc8be397e782a1dcc1e1148))
+
 ## 1.0.0 (2022-06-25)
 
 
