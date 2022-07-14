@@ -68,7 +68,7 @@ data "aws_iam_policy_document" "this" {
 
   # Key owner - all key operations
   dynamic "statement" {
-    for_each = var.enable_default_policy ? [1] : []
+    for_each = length(var.key_owners) > 0 ? [1] : []
 
     content {
       sid       = "KeyOwner"
