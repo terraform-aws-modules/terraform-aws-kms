@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.2](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.1...v1.0.2) (2022-07-14)
+
+
+### Bug Fixes
+
+* Correct boolean logic for enabling/disabling key owners policy statement ([#2](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/2)) ([944ea72](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/944ea72ac38f85af0a58f10650285958e78cac0c))
+
 ### [1.0.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.0...v1.0.1) (2022-06-28)
 
 
