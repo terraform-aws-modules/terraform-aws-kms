@@ -253,7 +253,7 @@ resource "aws_kms_alias" "this" {
 
   name          = var.aliases_use_name_prefix ? null : "alias/${each.value}"
   name_prefix   = var.aliases_use_name_prefix ? "alias/${each.value}-" : null
-  target_key_id = aws_kms_key.this[0].id
+  target_key_id = var.create_external ? aws_kms_external_key.this[0].id : aws_kms_key.this[0].key_id
 }
 
 ################################################################################
@@ -264,7 +264,7 @@ resource "aws_kms_grant" "this" {
   for_each = { for k, v in var.grants : k => v if var.create }
 
   name              = try(each.value.name, each.key)
-  key_id            = aws_kms_key.this[0].key_id
+  key_id            = var.create_external ? aws_kms_external_key.this[0].id : aws_kms_key.this[0].key_id
   grantee_principal = each.value.grantee_principal
   operations        = each.value.operations
 
@@ -281,3 +281,5 @@ resource "aws_kms_grant" "this" {
   grant_creation_tokens = try(each.value.grant_creation_tokens, null)
   retire_on_delete      = try(each.value.retire_on_delete, null)
 }
+
+
