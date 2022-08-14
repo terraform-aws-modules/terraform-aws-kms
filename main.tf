@@ -281,5 +281,3 @@ resource "aws_kms_grant" "this" {
   grant_creation_tokens = try(each.value.grant_creation_tokens, null)
   retire_on_delete      = try(each.value.retire_on_delete, null)
 }
-
-
