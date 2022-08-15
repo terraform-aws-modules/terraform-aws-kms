@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.0.3](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.2...v1.0.3) (2022-08-15)
+
+
+### Bug Fixes
+
+* Add support for aliases and grants on `aws_kms_external_key` ([#3](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/3)) ([beea8d6](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/beea8d64e3680978785b1b0a93911c5d602f98fe))
+
 ### [1.0.2](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.1...v1.0.2) (2022-07-14)
 
 
