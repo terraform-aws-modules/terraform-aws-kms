@@ -256,6 +256,14 @@ resource "aws_kms_alias" "this" {
   target_key_id = var.create_external ? aws_kms_external_key.this[0].id : aws_kms_key.this[0].key_id
 }
 
+resource "aws_kms_alias" "computed" {
+  for_each = { for k, v in var.computed_aliases : k => v if var.create }
+
+  name          = var.aliases_use_name_prefix ? null : "alias/${each.value.name}"
+  name_prefix   = var.aliases_use_name_prefix ? "alias/${each.value.name}-" : null
+  target_key_id = var.create_external ? aws_kms_external_key.this[0].id : aws_kms_key.this[0].key_id
+}
+
 ################################################################################
 # Grant
 ################################################################################

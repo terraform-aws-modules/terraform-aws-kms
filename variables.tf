@@ -162,6 +162,12 @@ variable "aliases" {
   default     = []
 }
 
+variable "computed_aliases" {
+  description = "A map of aliases to create. Values provided via the `name` key of the map can be computed from upstream resources"
+  type        = any
+  default     = {}
+}
+
 variable "aliases_use_name_prefix" {
   description = "Determines whether the alias name is used as a prefix"
   type        = bool

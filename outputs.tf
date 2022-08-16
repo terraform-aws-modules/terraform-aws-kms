@@ -38,7 +38,7 @@ output "external_key_usage" {
 
 output "aliases" {
   description = "A map of aliases created and their attributes"
-  value       = aws_kms_alias.this
+  value       = merge(aws_kms_alias.this, aws_kms_alias.computed)
 }
 
 ################################################################################
