@@ -103,7 +103,17 @@ module "kms" {
   key_asymmetric_sign_verify_users       = ["arn:aws:iam::012345678901:role/sign-verify-user"]
 
   # Aliases
-  aliases                 = ["one", "foo/bar"]
+  aliases = ["one", "foo/bar"] # accepts static strings only
+  computed_aliases = {
+    ex = {
+      # Sometimes you want to pass in an upstream attribute as the name and
+      # that conflicts with using `for_each over a `toset()` since the value is not
+      # known until after applying. Instead, we can use `computed_aliases` to work
+      # around this limitation
+      # Reference: https://github.com/hashicorp/terraform/issues/30937
+      name = aws_iam_role.lambda.name
+    }
+  }
   aliases_use_name_prefix = true
 
   # Grants
@@ -169,6 +179,7 @@ No modules.
 | <a name="input_aliases"></a> [aliases](#input\_aliases) | A list of aliases to create. Note - due to the use of `toset()`, values must be static strings and not computed values | `list(string)` | `[]` | no |
 | <a name="input_aliases_use_name_prefix"></a> [aliases\_use\_name\_prefix](#input\_aliases\_use\_name\_prefix) | Determines whether the alias name is used as a prefix | `bool` | `false` | no |
 | <a name="input_bypass_policy_lockout_safety_check"></a> [bypass\_policy\_lockout\_safety\_check](#input\_bypass\_policy\_lockout\_safety\_check) | A flag to indicate whether to bypass the key policy lockout safety check. Setting this value to true increases the risk that the KMS key becomes unmanageable | `bool` | `null` | no |
+| <a name="input_computed_aliases"></a> [computed\_aliases](#input\_computed\_aliases) | A map of aliases to create. Values provided via the `name` key of the map can be computed from upstream resources | `any` | `{}` | no |
 | <a name="input_create"></a> [create](#input\_create) | Determines whether resources will be created (affects all resources) | `bool` | `true` | no |
 | <a name="input_create_external"></a> [create\_external](#input\_create\_external) | Determines whether an external CMK (externally provided material) will be created or a standard CMK (AWS provided material) | `bool` | `false` | no |
 | <a name="input_customer_master_key_spec"></a> [customer\_master\_key\_spec](#input\_customer\_master\_key\_spec) | Specifies whether the key contains a symmetric key or an asymmetric key pair and the encryption algorithms or signing algorithms that the key supports. Valid values: `SYMMETRIC_DEFAULT`, `RSA_2048`, `RSA_3072`, `RSA_4096`, `HMAC_256`, `ECC_NIST_P256`, `ECC_NIST_P384`, `ECC_NIST_P521`, or `ECC_SECG_P256K1`. Defaults to `SYMMETRIC_DEFAULT` | `string` | `null` | no |
