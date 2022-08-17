@@ -249,17 +249,14 @@ data "aws_iam_policy_document" "this" {
 ################################################################################
 
 locals {
-  # TODO - at next breaking change, merge both to use the `computed_alias` approach
-  # under the single varaible `aliases`
-  aliases          = { for k, v in toset(var.aliases) : k => v }
-  computed_aliases = { for i, v in var.computed_aliases : i => v }
+  aliases = { for k, v in toset(var.aliases) : k => { name = v } }
 }
 
 resource "aws_kms_alias" "this" {
-  for_each = { for k, v in merge(local.aliases, local.computed_aliases) : k => v if var.create }
+  for_each = { for k, v in merge(local.aliases, var.computed_aliases) : k => v if var.create }
 
-  name          = var.aliases_use_name_prefix ? null : "alias/${each.value}"
-  name_prefix   = var.aliases_use_name_prefix ? "alias/${each.value}-" : null
+  name          = var.aliases_use_name_prefix ? null : "alias/${each.value.name}"
+  name_prefix   = var.aliases_use_name_prefix ? "alias/${each.value.name}-" : null
   target_key_id = var.create_external ? aws_kms_external_key.this[0].id : aws_kms_key.this[0].key_id
 }
 
