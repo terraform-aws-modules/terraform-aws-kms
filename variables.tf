@@ -164,8 +164,8 @@ variable "aliases" {
 
 variable "computed_aliases" {
   description = "A map of aliases to create. Values provided via the `name` key of the map can be computed from upstream resources"
-  type        = any
-  default     = {}
+  type        = list(string)
+  default     = []
 }
 
 variable "aliases_use_name_prefix" {
