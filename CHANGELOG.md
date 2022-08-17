@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.3...v1.1.0) (2022-08-17)
+
+
+### Features
+
+* Add support for providing aliases using computed attributes ([#4](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/4)) ([8150812](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/81508121e16b9da133259763cca1fe98485a38b7))
+
 ### [1.0.3](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.2...v1.0.3) (2022-08-15)
 
 
