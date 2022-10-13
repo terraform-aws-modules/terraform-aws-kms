@@ -16,6 +16,8 @@ locals {
 
 data "aws_caller_identity" "current" {}
 
+data "aws_region" "current" {}
+
 ################################################################################
 # KMS Module
 ################################################################################
@@ -40,6 +42,7 @@ module "kms_complete" {
   key_hmac_users                         = [local.current_identity]
   key_asymmetric_public_encryption_users = [local.current_identity]
   key_asymmetric_sign_verify_users       = [local.current_identity]
+  key_service_principals                 = ["logs.${data.aws_region.current.name}.amazonaws.com"]
 
   # Aliases
   aliases = ["one", "foo/bar"]
