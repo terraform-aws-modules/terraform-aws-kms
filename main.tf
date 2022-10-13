@@ -244,22 +244,16 @@ data "aws_iam_policy_document" "this" {
   }
 
   dynamic "statement" {
-    for_each = length(var.key_service_principals) > 0 ? [1] : []
+    for_each = var.key_service_principals
 
     content {
-      sid = "KeyPrincipals"
-      actions = [
-        "kms:Encrypt*",
-        "kms:Decrypt*",
-        "kms:ReEncrypt*",
-        "kms:GenerateDataKey*",
-        "kms:Describe*"
-      ]
-      resources = ["*"]
+      sid       = key_service_principals.value["sid"]
+      actions   = key_service_principals.value["actions"]
+      resources = key_service_principals.value["resources"]
 
       principals {
         type        = "Service"
-        identifiers = var.key_service_principals
+        identifiers = key_service_principals.value["identifiers"]
       }
     }
   }

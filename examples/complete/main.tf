@@ -42,7 +42,20 @@ module "kms_complete" {
   key_hmac_users                         = [local.current_identity]
   key_asymmetric_public_encryption_users = [local.current_identity]
   key_asymmetric_sign_verify_users       = [local.current_identity]
-  key_service_principals                 = ["logs.${data.aws_region.current.name}.amazonaws.com"]
+  key_service_principals = {
+    "aws-logs" = {
+      sid = "aws-logs"
+      actions = [
+        "kms:Encrypt*",
+        "kms:Decrypt*",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:Describe*"
+      ]
+      resources  = "*"
+      principals = ["logs.${data.aws_region.current.name}.amazonaws.com"]
+    }
+  }
 
   # Aliases
   aliases = ["one", "foo/bar"]
