@@ -111,13 +111,8 @@ variable "key_users" {
 }
 
 variable "key_service_principals" {
-  description = "A list of objects for IAM Services for [key principals](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-services.html)"
-  type = map(object({
-    sid        = string
-    actions    = list(string)
-    resources  = string
-    principals = list(string)
-  }))
+  description = "A map of IAM Services for [key principals](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-services.html)"
+  type = map(any)
   default = {}
 }
 

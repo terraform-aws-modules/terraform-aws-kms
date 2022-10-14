@@ -52,7 +52,7 @@ module "kms_complete" {
         "kms:GenerateDataKey*",
         "kms:Describe*"
       ]
-      resources  = "*"
+      resources  = ["*"]
       principals = ["logs.${data.aws_region.current.name}.amazonaws.com"]
     }
   }

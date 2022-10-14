@@ -247,13 +247,13 @@ data "aws_iam_policy_document" "this" {
     for_each = var.key_service_principals
 
     content {
-      sid       = key_service_principals.value["sid"]
-      actions   = key_service_principals.value["actions"]
-      resources = key_service_principals.value["resources"]
+      sid       = statement.value.sid
+      actions   = statement.value.actions
+      resources = statement.value.resources
 
       principals {
         type        = "Service"
-        identifiers = key_service_principals.value["identifiers"]
+        identifiers = statement.value.principals
       }
     }
   }
