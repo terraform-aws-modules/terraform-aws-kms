@@ -143,7 +143,7 @@ variable "key_asymmetric_sign_verify_users" {
 variable "key_statements" {
   description = "A map of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
   type        = any
-  default     = []
+  default     = {}
 }
 
 variable "source_policy_documents" {
