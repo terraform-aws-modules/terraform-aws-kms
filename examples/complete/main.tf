@@ -15,7 +15,6 @@ locals {
 }
 
 data "aws_caller_identity" "current" {}
-
 data "aws_region" "current" {}
 
 ################################################################################
@@ -42,9 +41,9 @@ module "kms_complete" {
   key_hmac_users                         = [local.current_identity]
   key_asymmetric_public_encryption_users = [local.current_identity]
   key_asymmetric_sign_verify_users       = [local.current_identity]
-  key_service_principals = {
-    "aws-logs" = {
-      sid = "aws-logs"
+  key_statements = [
+    {
+      sid = "CloudWatchLogs"
       actions = [
         "kms:Encrypt*",
         "kms:Decrypt*",
@@ -52,10 +51,26 @@ module "kms_complete" {
         "kms:GenerateDataKey*",
         "kms:Describe*"
       ]
-      resources  = ["*"]
-      principals = ["logs.${data.aws_region.current.name}.amazonaws.com"]
+      resources = ["*"]
+
+      principals = [
+        {
+          type        = "Service"
+          identifiers = ["logs.${data.aws_region.current.name}.amazonaws.com"]
+        }
+      ]
+
+      conditions = [
+        {
+          test     = "ArnLike"
+          variable = "kms:EncryptionContext:aws:logs:arn"
+          values = [
+            "arn:aws:logs:${local.region}:${data.aws_caller_identity.current.account_id}:log-group:*",
+          ]
+        }
+      ]
     }
-  }
+  ]
 
   # Aliases
   aliases = ["one", "foo/bar"]

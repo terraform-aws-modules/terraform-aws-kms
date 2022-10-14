@@ -110,12 +110,6 @@ variable "key_users" {
   default     = []
 }
 
-variable "key_service_principals" {
-  description = "A map of IAM Services for [key principals](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-services.html)"
-  type        = map(any)
-  default     = {}
-}
-
 variable "key_service_users" {
   description = "A list of IAM ARNs for [key service users](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-service-integration)"
   type        = list(string)
@@ -146,6 +140,12 @@ variable "key_asymmetric_sign_verify_users" {
   default     = []
 }
 
+variable "key_statements" {
+  description = "A map of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
+  type        = any
+  default     = []
+}
+
 variable "source_policy_documents" {
   description = "List of IAM policy documents that are merged together into the exported document. Statements must have unique `sid`s"
   type        = list(string)
@@ -157,6 +157,7 @@ variable "override_policy_documents" {
   type        = list(string)
   default     = []
 }
+
 
 ################################################################################
 # Alias
