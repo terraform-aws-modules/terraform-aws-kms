@@ -110,6 +110,12 @@ variable "key_users" {
   default     = []
 }
 
+variable "key_service_principals" {
+  description = "A map of IAM Services for [key principals](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-services.html)"
+  type        = map(any)
+  default     = {}
+}
+
 variable "key_service_users" {
   description = "A list of IAM ARNs for [key service users](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-service-integration)"
   type        = list(string)

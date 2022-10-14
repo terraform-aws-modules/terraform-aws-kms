@@ -242,6 +242,21 @@ data "aws_iam_policy_document" "this" {
       }
     }
   }
+
+  dynamic "statement" {
+    for_each = var.key_service_principals
+
+    content {
+      sid       = statement.value.sid
+      actions   = statement.value.actions
+      resources = statement.value.resources
+
+      principals {
+        type        = "Service"
+        identifiers = statement.value.principals
+      }
+    }
+  }
 }
 
 ################################################################################
