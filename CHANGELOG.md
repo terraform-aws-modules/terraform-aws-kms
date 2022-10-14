@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.2.0...v1.2.1) (2022-10-14)
+
+
+### Bug Fixes
+
+* Modify `key_service_principals` to be generic to support conditions for confused deputy problem ([#7](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/7)) ([7b85239](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/7b85239466b365c31d7e976f82964789d4215c0e))
+
 ## [1.2.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.1.0...v1.2.0) (2022-10-14)
 
 
