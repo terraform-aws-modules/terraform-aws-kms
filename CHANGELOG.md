@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.1.0...v1.2.0) (2022-10-14)
+
+
+### Features
+
+* Adding Key Service Principals ([#6](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/6)) ([4841f28](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/4841f28bc1366a789df97f022b42881d5d73421d))
+
 ## [1.1.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.0.3...v1.1.0) (2022-08-17)
 
 
