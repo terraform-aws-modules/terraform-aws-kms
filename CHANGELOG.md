@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.2.2](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.2.1...v1.2.2) (2022-11-07)
+
+
+### Bug Fixes
+
+* Update CI configuration files to use latest version ([#8](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/8)) ([01bd36b](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/01bd36b2a07830fe91184c69f3e70c975a1fdd62))
+
 ### [1.2.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.2.0...v1.2.1) (2022-10-14)
 
 
