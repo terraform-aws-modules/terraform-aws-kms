@@ -128,6 +128,76 @@ module "kms_disabled" {
 }
 
 ################################################################################
+# Replica Key Examples
+################################################################################
+
+module "kms_primary" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "Complete key example showing various configurations available"
+  enable_key_rotation     = false
+  is_enabled              = true
+  key_usage               = "ENCRYPT_DECRYPT"
+  multi_region            = true
+}
+
+provider "aws" {
+  region = "eu-west-1"
+  alias  = "replica"
+}
+
+module "kms_replica" {
+  source = "../.."
+
+  create_replica          = true
+  description             = "Replica key example showing various configurations available"
+  primary_key_arn         = module.kms_primary.key_arn
+  deletion_window_in_days = 7
+  enable_default_policy   = true
+
+  tags = local.tags
+
+  providers = {
+    aws = aws.replica
+  }
+}
+
+################################################################################
+# Replica Key Examples
+################################################################################
+
+module "kms_primary_external" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "External key example"
+  is_enabled              = true
+  key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  multi_region            = true
+  valid_to                = "2085-04-12T23:20:50.52Z"
+
+  tags = local.tags
+}
+
+module "kms_replica_external" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "Replica external key example"
+  is_enabled              = true
+  key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  primary_key_arn         = module.kms_primary_external.key_arn
+  valid_to                = "2085-04-12T23:20:50.52Z"
+
+  tags = local.tags
+
+  providers = {
+    aws = aws.replica
+  }
+}
+
+################################################################################
 # Supporting Resources
 ################################################################################
 

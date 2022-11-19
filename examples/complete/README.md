@@ -41,6 +41,10 @@ Note that this example may create resources which will incur monetary charges on
 | <a name="module_kms_default"></a> [kms\_default](#module\_kms\_default) | ../.. | n/a |
 | <a name="module_kms_disabled"></a> [kms\_disabled](#module\_kms\_disabled) | ../.. | n/a |
 | <a name="module_kms_external"></a> [kms\_external](#module\_kms\_external) | ../.. | n/a |
+| <a name="module_kms_primary"></a> [kms\_primary](#module\_kms\_primary) | ../.. | n/a |
+| <a name="module_kms_primary_external"></a> [kms\_primary\_external](#module\_kms\_primary\_external) | ../.. | n/a |
+| <a name="module_kms_replica"></a> [kms\_replica](#module\_kms\_replica) | ../.. | n/a |
+| <a name="module_kms_replica_external"></a> [kms\_replica\_external](#module\_kms\_replica\_external) | ../.. | n/a |
 
 ## Resources
 

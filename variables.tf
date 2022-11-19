@@ -158,6 +158,37 @@ variable "override_policy_documents" {
   default     = []
 }
 
+################################################################################
+# Replica Key
+################################################################################
+
+variable "create_replica" {
+  description = "Determines whether a replica standard CMK (AWS provided material)"
+  type        = bool
+  default     = false
+}
+
+variable "primary_key_arn" {
+  description = "The primary key arn of a multi-region replica key"
+  type        = string
+  default     = null
+}
+
+################################################################################
+# Replica External Key
+################################################################################
+
+variable "create_replica_external" {
+  description = "Determines whether a replica external CMK (externally provided material) will be created or a replica standard CMK (AWS provided material)"
+  type        = bool
+  default     = false
+}
+
+variable "primary_external_key_arn" {
+  description = "The primary external key arn of a nulti-region replica external key"
+  type        = string
+  default     = null
+}
 
 ################################################################################
 # Alias
