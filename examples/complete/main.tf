@@ -140,6 +140,10 @@ module "kms_primary" {
   is_enabled              = true
   key_usage               = "ENCRYPT_DECRYPT"
   multi_region            = true
+
+  aliases = ["primary-standard"]
+
+  tags = local.tags
 }
 
 provider "aws" {
@@ -150,11 +154,41 @@ provider "aws" {
 module "kms_replica" {
   source = "../.."
 
-  create_replica          = true
-  description             = "Replica key example showing various configurations available"
-  primary_key_arn         = module.kms_primary.key_arn
   deletion_window_in_days = 7
+  description             = "Replica key example showing various configurations available"
+  create_replica          = true
+  primary_key_arn         = module.kms_primary.key_arn
   enable_default_policy   = true
+
+  key_owners         = [local.current_identity]
+  key_administrators = [local.current_identity]
+  key_users          = [local.current_identity]
+
+  # Aliases
+  aliases = ["replica-standard"]
+  computed_aliases = {
+    ex = {
+      # Sometimes you want to pass in an upstream attribute as the name and
+      # that conflicts with using `for_each over a `toset()` since the value is not
+      # known until after applying. Instead, we can use `computed_aliases` to work
+      # around this limitation
+      # Reference: https://github.com/hashicorp/terraform/issues/30937
+      name = aws_iam_role.lambda.name
+    }
+  }
+
+  # Grants
+  grants = {
+    lambda = {
+      grantee_principal = aws_iam_role.lambda.arn
+      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+      constraints = {
+        encryption_context_equals = {
+          Department = "Finance"
+        }
+      }
+    }
+  }
 
   tags = local.tags
 
@@ -177,6 +211,8 @@ module "kms_primary_external" {
   multi_region            = true
   valid_to                = "2085-04-12T23:20:50.52Z"
 
+  aliases = ["primary-external"]
+  
   tags = local.tags
 }
 
@@ -186,9 +222,25 @@ module "kms_replica_external" {
   deletion_window_in_days = 7
   description             = "Replica external key example"
   is_enabled              = true
-  key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
-  primary_key_arn         = module.kms_primary_external.key_arn
-  valid_to                = "2085-04-12T23:20:50.52Z"
+  # key material must be the same as the primary's
+  key_material_base64 = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  primary_key_arn     = module.kms_primary_external.key_arn
+  valid_to            = "2085-04-12T23:20:50.52Z"
+
+  aliases = ["replica-external"]
+
+  # Grants
+  grants = {
+    lambda = {
+      grantee_principal = aws_iam_role.lambda.arn
+      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+      constraints = {
+        encryption_context_equals = {
+          Department = "Finance"
+        }
+      }
+    }
+  }
 
   tags = local.tags
 
