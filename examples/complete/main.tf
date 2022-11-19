@@ -212,7 +212,7 @@ module "kms_primary_external" {
   valid_to                = "2085-04-12T23:20:50.52Z"
 
   aliases = ["primary-external"]
-  
+
   tags = local.tags
 }
 
