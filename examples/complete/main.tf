@@ -135,7 +135,7 @@ module "kms_primary" {
   source = "../.."
 
   deletion_window_in_days = 7
-  description             = "Complete key example showing various configurations available"
+  description             = "Primary key of replica key example"
   enable_key_rotation     = false
   is_enabled              = true
   key_usage               = "ENCRYPT_DECRYPT"
@@ -205,7 +205,7 @@ module "kms_primary_external" {
   source = "../.."
 
   deletion_window_in_days = 7
-  description             = "External key example"
+  description             = "Primary external key of replica external key example"
   is_enabled              = true
   key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
   multi_region            = true
@@ -220,7 +220,7 @@ module "kms_replica_external" {
   source = "../.."
 
   deletion_window_in_days = 7
-  description             = "Replica external key example"
+  description             = "Replica external key example showing various configurations available"
   is_enabled              = true
   # key material must be the same as the primary's
   key_material_base64 = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="

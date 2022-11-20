@@ -163,7 +163,7 @@ variable "override_policy_documents" {
 ################################################################################
 
 variable "create_replica" {
-  description = "Determines whether a replica standard CMK (AWS provided material)"
+  description = "Determines whether a replica standard CMK will be created (AWS provided material)"
   type        = bool
   default     = false
 }
@@ -185,7 +185,7 @@ variable "create_replica_external" {
 }
 
 variable "primary_external_key_arn" {
-  description = "The primary external key arn of a nulti-region replica external key"
+  description = "The primary external key arn of a multi-region replica external key"
   type        = string
   default     = null
 }
