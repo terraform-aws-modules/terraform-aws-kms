@@ -179,7 +179,7 @@ variable "primary_key_arn" {
 ################################################################################
 
 variable "create_replica_external" {
-  description = "Determines whether a replica external CMK (externally provided material) will be created or a replica standard CMK (AWS provided material)"
+  description = "Determines whether a replica external CMK will be created (externally provided material)"
   type        = bool
   default     = false
 }
