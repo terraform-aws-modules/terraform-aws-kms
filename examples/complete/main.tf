@@ -118,8 +118,10 @@ module "kms_external" {
 module "kms_dnssec_signing" {
   source = "../.."
 
-  deletion_window_in_days = 7
-  description             = "CMK for Route53 DNSSEC signing"
+  description = "CMK for Route53 DNSSEC signing"
+
+  key_usage                = "SIGN_VERIFY"
+  customer_master_key_spec = "ECC_NIST_P256"
 
   enable_route53_dnssec = true
   route53_dnssec_sources = [
