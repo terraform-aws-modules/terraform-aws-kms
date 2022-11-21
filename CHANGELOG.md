@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.2.2...v1.3.0) (2022-11-21)
+
+
+### Features
+
+* Add support for creating customer managed keys used for Route53 DNSSEC signing ([#10](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/10)) ([d694450](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/d6944500aa33aafa19027facb1828ed3cf837196))
+
 ### [1.2.2](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.2.1...v1.2.2) (2022-11-07)
 
 
