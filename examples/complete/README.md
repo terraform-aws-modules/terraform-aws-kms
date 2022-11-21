@@ -40,6 +40,7 @@ Note that this example may create resources which will incur monetary charges on
 | <a name="module_kms_complete"></a> [kms\_complete](#module\_kms\_complete) | ../.. | n/a |
 | <a name="module_kms_default"></a> [kms\_default](#module\_kms\_default) | ../.. | n/a |
 | <a name="module_kms_disabled"></a> [kms\_disabled](#module\_kms\_disabled) | ../.. | n/a |
+| <a name="module_kms_dnssec_signing"></a> [kms\_dnssec\_signing](#module\_kms\_dnssec\_signing) | ../.. | n/a |
 | <a name="module_kms_external"></a> [kms\_external](#module\_kms\_external) | ../.. | n/a |
 
 ## Resources

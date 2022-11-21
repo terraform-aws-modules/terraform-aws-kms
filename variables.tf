@@ -158,6 +158,17 @@ variable "override_policy_documents" {
   default     = []
 }
 
+variable "enable_route53_dnssec" {
+  description = "Determines whether the KMS policy used for Route53 DNSSEC signing is enabled"
+  type        = bool
+  default     = false
+}
+
+variable "route53_dnssec_sources" {
+  description = "A list of maps containing `account_ids` and Route53 `hosted_zone_arn` that will be allowed to sign DNSSEC records"
+  type        = list(any)
+  default     = []
+}
 
 ################################################################################
 # Alias
