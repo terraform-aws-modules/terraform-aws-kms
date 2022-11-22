@@ -107,10 +107,11 @@ module "kms_external" {
 
   deletion_window_in_days = 7
   description             = "External key example"
+  create_external         = true
   is_enabled              = true
   key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
   multi_region            = false
-  valid_to                = "2085-04-12T23:20:50.52Z"
+  valid_to                = "2023-11-21T23:20:50Z"
 
   tags = local.tags
 }
@@ -207,9 +208,10 @@ module "kms_primary_external" {
   deletion_window_in_days = 7
   description             = "Primary external key of replica external key example"
   is_enabled              = true
+  create_external         = true
   key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
   multi_region            = true
-  valid_to                = "2085-04-12T23:20:50.52Z"
+  valid_to                = "2023-11-21T23:20:50Z"
 
   aliases = ["primary-external"]
 
@@ -221,11 +223,12 @@ module "kms_replica_external" {
 
   deletion_window_in_days = 7
   description             = "Replica external key example showing various configurations available"
+  create_replica_external = true
   is_enabled              = true
   # key material must be the same as the primary's
-  key_material_base64 = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
-  primary_key_arn     = module.kms_primary_external.key_arn
-  valid_to            = "2085-04-12T23:20:50.52Z"
+  key_material_base64      = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  primary_external_key_arn = module.kms_primary_external.key_arn
+  valid_to                 = "2023-11-21T23:20:50Z"
 
   aliases = ["replica-external"]
 
