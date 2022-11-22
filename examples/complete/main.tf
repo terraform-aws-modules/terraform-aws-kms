@@ -125,6 +125,7 @@ module "kms_dnssec_signing" {
   customer_master_key_spec = "ECC_NIST_P256"
 
   enable_route53_dnssec = true
+  enable_key_rotation   = false
   route53_dnssec_sources = [
     {
       accounts_ids    = [data.aws_caller_identity.current.account_id] # can ommit if using current account ID which is default
