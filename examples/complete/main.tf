@@ -116,6 +116,27 @@ module "kms_external" {
   tags = local.tags
 }
 
+module "kms_dnssec_signing" {
+  source = "../.."
+
+  description = "CMK for Route53 DNSSEC signing"
+
+  key_usage                = "SIGN_VERIFY"
+  customer_master_key_spec = "ECC_NIST_P256"
+
+  enable_route53_dnssec = true
+  route53_dnssec_sources = [
+    {
+      accounts_ids    = [data.aws_caller_identity.current.account_id] # can ommit if using current account ID which is default
+      hosted_zone_arn = "arn:aws:route53:::hostedzone/*"              # can ommit, this is default value
+    }
+  ]
+
+  aliases = ["route53/dnssec-ex"]
+
+  tags = local.tags
+}
+
 module "kms_default" {
   source = "../.."
 

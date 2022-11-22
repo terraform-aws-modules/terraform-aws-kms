@@ -279,6 +279,68 @@ data "aws_iam_policy_document" "this" {
     }
   }
 
+  # https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/access-control-managing-permissions.html#KMS-key-policy-for-DNSSEC
+  dynamic "statement" {
+    for_each = var.enable_route53_dnssec ? [1] : []
+
+    content {
+      sid = "Route53DnssecService"
+      actions = [
+        "kms:DescribeKey",
+        "kms:GetPublicKey",
+        "kms:Sign",
+      ]
+      resources = ["*"]
+
+      principals {
+        type        = "Service"
+        identifiers = ["dnssec-route53.${data.aws_partition.current.dns_suffix}"]
+      }
+    }
+  }
+
+  # https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/access-control-managing-permissions.html#KMS-key-policy-for-DNSSEC
+  dynamic "statement" {
+    for_each = var.enable_route53_dnssec ? [1] : []
+
+    content {
+      sid       = "Route53DnssecGrant"
+      actions   = ["kms:CreateGrant"]
+      resources = ["*"]
+
+      principals {
+        type        = "Service"
+        identifiers = ["dnssec-route53.${data.aws_partition.current.dns_suffix}"]
+      }
+
+      condition {
+        test     = "Bool"
+        variable = "kms:GrantIsForAWSResource"
+        values   = ["true"]
+      }
+
+      dynamic "condition" {
+        for_each = var.route53_dnssec_sources
+
+        content {
+          test     = "StringEquals"
+          variable = "aws:SourceAccount"
+          values   = try(condition.value.account_ids, [data.aws_caller_identity.current.account_id])
+        }
+      }
+
+      dynamic "condition" {
+        for_each = var.route53_dnssec_sources
+
+        content {
+          test     = "ArnLike"
+          variable = "aws:SourceArn"
+          values   = [try(condition.value.hosted_zone_arn, "arn:${data.aws_partition.current.partition}:route53:::hostedzone/*")]
+        }
+      }
+    }
+  }
+
   dynamic "statement" {
     for_each = var.key_statements
 
