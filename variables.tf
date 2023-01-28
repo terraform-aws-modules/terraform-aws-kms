@@ -171,6 +171,38 @@ variable "route53_dnssec_sources" {
 }
 
 ################################################################################
+# Replica Key
+################################################################################
+
+variable "create_replica" {
+  description = "Determines whether a replica standard CMK will be created (AWS provided material)"
+  type        = bool
+  default     = false
+}
+
+variable "primary_key_arn" {
+  description = "The primary key arn of a multi-region replica key"
+  type        = string
+  default     = null
+}
+
+################################################################################
+# Replica External Key
+################################################################################
+
+variable "create_replica_external" {
+  description = "Determines whether a replica external CMK will be created (externally provided material)"
+  type        = bool
+  default     = false
+}
+
+variable "primary_external_key_arn" {
+  description = "The primary external key arn of a multi-region replica external key"
+  type        = string
+  default     = null
+}
+
+################################################################################
 # Alias
 ################################################################################
 

@@ -6,7 +6,7 @@ data "aws_caller_identity" "current" {}
 ################################################################################
 
 resource "aws_kms_key" "this" {
-  count = var.create && !var.create_external ? 1 : 0
+  count = var.create && !var.create_external && !var.create_replica && !var.create_replica_external ? 1 : 0
 
   bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
   customer_master_key_spec           = var.customer_master_key_spec
@@ -26,7 +26,7 @@ resource "aws_kms_key" "this" {
 ################################################################################
 
 resource "aws_kms_external_key" "this" {
-  count = var.create && var.create_external ? 1 : 0
+  count = var.create && var.create_external && !var.create_replica && !var.create_replica_external ? 1 : 0
 
   bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
   deletion_window_in_days            = var.deletion_window_in_days
@@ -35,6 +35,42 @@ resource "aws_kms_external_key" "this" {
   key_material_base64                = var.key_material_base64
   multi_region                       = var.multi_region
   policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
+  valid_to                           = var.valid_to
+
+  tags = var.tags
+}
+
+################################################################################
+# Replica Key
+################################################################################
+
+resource "aws_kms_replica_key" "this" {
+  count = var.create && var.create_replica && !var.create_external && !var.create_replica_external ? 1 : 0
+
+  bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
+  deletion_window_in_days            = var.deletion_window_in_days
+  description                        = var.description
+  primary_key_arn                    = var.primary_key_arn
+  enabled                            = var.is_enabled
+  policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
+
+  tags = var.tags
+}
+
+################################################################################
+# Replica External Key
+################################################################################
+
+resource "aws_kms_replica_external_key" "this" {
+  count = var.create && !var.create_replica && !var.create_external && var.create_replica_external ? 1 : 0
+
+  bypass_policy_lockout_safety_check = var.bypass_policy_lockout_safety_check
+  deletion_window_in_days            = var.deletion_window_in_days
+  description                        = var.description
+  enabled                            = var.is_enabled
+  key_material_base64                = var.key_material_base64
+  policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
+  primary_key_arn                    = var.primary_external_key_arn
   valid_to                           = var.valid_to
 
   tags = var.tags
@@ -360,7 +396,7 @@ resource "aws_kms_alias" "this" {
 
   name          = var.aliases_use_name_prefix ? null : "alias/${each.value.name}"
   name_prefix   = var.aliases_use_name_prefix ? "alias/${each.value.name}-" : null
-  target_key_id = var.create_external ? aws_kms_external_key.this[0].id : aws_kms_key.this[0].key_id
+  target_key_id = try(aws_kms_key.this[0].key_id, aws_kms_external_key.this[0].id, aws_kms_replica_key.this[0].key_id, aws_kms_replica_external_key.this[0].key_id)
 }
 
 ################################################################################
@@ -371,7 +407,7 @@ resource "aws_kms_grant" "this" {
   for_each = { for k, v in var.grants : k => v if var.create }
 
   name              = try(each.value.name, each.key)
-  key_id            = var.create_external ? aws_kms_external_key.this[0].id : aws_kms_key.this[0].key_id
+  key_id            = try(aws_kms_key.this[0].key_id, aws_kms_external_key.this[0].id, aws_kms_replica_key.this[0].key_id, aws_kms_replica_external_key.this[0].key_id)
   grantee_principal = each.value.grantee_principal
   operations        = each.value.operations
 

@@ -107,10 +107,11 @@ module "kms_external" {
 
   deletion_window_in_days = 7
   description             = "External key example"
+  create_external         = true
   is_enabled              = true
   key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
   multi_region            = false
-  valid_to                = "2085-04-12T23:20:50.52Z"
+  valid_to                = "2023-11-21T23:20:50Z"
 
   tags = local.tags
 }
@@ -124,6 +125,7 @@ module "kms_dnssec_signing" {
   customer_master_key_spec = "ECC_NIST_P256"
 
   enable_route53_dnssec = true
+  enable_key_rotation   = false
   route53_dnssec_sources = [
     {
       accounts_ids    = [data.aws_caller_identity.current.account_id] # can ommit if using current account ID which is default
@@ -146,6 +148,130 @@ module "kms_disabled" {
   source = "../.."
 
   create = false
+}
+
+################################################################################
+# Replica Key Example
+################################################################################
+
+module "kms_primary" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "Primary key of replica key example"
+  enable_key_rotation     = false
+  is_enabled              = true
+  key_usage               = "ENCRYPT_DECRYPT"
+  multi_region            = true
+
+  aliases = ["primary-standard"]
+
+  tags = local.tags
+}
+
+provider "aws" {
+  region = "eu-west-1"
+  alias  = "replica"
+}
+
+module "kms_replica" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "Replica key example showing various configurations available"
+  create_replica          = true
+  primary_key_arn         = module.kms_primary.key_arn
+  enable_default_policy   = true
+
+  key_owners         = [local.current_identity]
+  key_administrators = [local.current_identity]
+  key_users          = [local.current_identity]
+
+  # Aliases
+  aliases = ["replica-standard"]
+  computed_aliases = {
+    ex = {
+      # Sometimes you want to pass in an upstream attribute as the name and
+      # that conflicts with using `for_each over a `toset()` since the value is not
+      # known until after applying. Instead, we can use `computed_aliases` to work
+      # around this limitation
+      # Reference: https://github.com/hashicorp/terraform/issues/30937
+      name = aws_iam_role.lambda.name
+    }
+  }
+
+  # Grants
+  grants = {
+    lambda = {
+      grantee_principal = aws_iam_role.lambda.arn
+      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+      constraints = {
+        encryption_context_equals = {
+          Department = "Finance"
+        }
+      }
+    }
+  }
+
+  tags = local.tags
+
+  providers = {
+    aws = aws.replica
+  }
+}
+
+################################################################################
+# Replica External Key Example
+################################################################################
+
+module "kms_primary_external" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "Primary external key of replica external key example"
+  is_enabled              = true
+  create_external         = true
+  key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  multi_region            = true
+  valid_to                = "2023-11-21T23:20:50Z"
+
+  aliases = ["primary-external"]
+
+  tags = local.tags
+}
+
+module "kms_replica_external" {
+  source = "../.."
+
+  deletion_window_in_days = 7
+  description             = "Replica external key example showing various configurations available"
+  create_replica_external = true
+  is_enabled              = true
+  # key material must be the same as the primary's
+  key_material_base64      = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
+  primary_external_key_arn = module.kms_primary_external.key_arn
+  valid_to                 = "2023-11-21T23:20:50Z"
+
+  aliases = ["replica-external"]
+
+  # Grants
+  grants = {
+    lambda = {
+      grantee_principal = aws_iam_role.lambda.arn
+      operations        = ["Encrypt", "Decrypt", "GenerateDataKey"]
+      constraints = {
+        encryption_context_equals = {
+          Department = "Finance"
+        }
+      }
+    }
+  }
+
+  tags = local.tags
+
+  providers = {
+    aws = aws.replica
+  }
 }
 
 ################################################################################
