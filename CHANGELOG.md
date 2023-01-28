@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [1.3.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.3.0...v1.3.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* Use a version for  to avoid GitHub API rate limiting on CI workflows ([#12](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/12)) ([040736e](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/040736eca2e82f27ac1219dcf4f10ee0eb24ff6d))
+
 ## [1.3.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.2.2...v1.3.0) (2022-11-21)
 
 
