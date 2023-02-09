@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.4.0...v1.5.0) (2023-02-09)
+
+
+### Features
+
+* Add specific policy for Autoscaling service linked roles ([#15](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/15)) ([217ac76](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/217ac76868ac3624bb89e183372d25d2da67bd8b))
+
 ## [1.4.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.3.1...v1.4.0) (2023-01-28)
 
 
