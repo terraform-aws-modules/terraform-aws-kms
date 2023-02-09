@@ -116,6 +116,12 @@ variable "key_service_users" {
   default     = []
 }
 
+variable "key_service_roles_for_autoscaling" {
+  description = "A list of IAM ARNs for [AWSServiceRoleForAutoScaling roles](https://docs.aws.amazon.com/autoscaling/ec2/userguide/key-policy-requirements-EBS-encryption.html#policy-example-cmk-access)"
+  type        = list(string)
+  default     = []
+}
+
 variable "key_symmetric_encryption_users" {
   description = "A list of IAM ARNs for [key symmetric encryption users](https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-users-crypto)"
   type        = list(string)

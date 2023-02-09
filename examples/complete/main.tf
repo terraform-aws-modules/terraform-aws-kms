@@ -37,6 +37,7 @@ module "kms_complete" {
   key_administrators                     = [local.current_identity]
   key_users                              = [local.current_identity]
   key_service_users                      = [local.current_identity]
+  key_service_roles_for_autoscaling      = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
   key_symmetric_encryption_users         = [local.current_identity]
   key_hmac_users                         = [local.current_identity]
   key_asymmetric_public_encryption_users = [local.current_identity]
