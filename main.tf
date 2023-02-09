@@ -197,6 +197,51 @@ data "aws_iam_policy_document" "this" {
     }
   }
 
+  # Key service roles for autoscaling - https://docs.aws.amazon.com/autoscaling/ec2/userguide/key-policy-requirements-EBS-encryption.html#policy-example-cmk-access
+  dynamic "statement" {
+    for_each = length(var.key_service_roles_for_autoscaling) > 0 ? [1] : []
+
+    content {
+      sid = "KeyServiceRolesASG"
+      actions = [
+        "kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:DescribeKey",
+      ]
+      resources = ["*"]
+
+      principals {
+        type        = "AWS"
+        identifiers = var.key_service_roles_for_autoscaling
+      }
+    }
+  }
+
+  dynamic "statement" {
+    for_each = length(var.key_service_roles_for_autoscaling) > 0 ? [1] : []
+
+    content {
+      sid = "KeyServiceRolesASGPersistentVol"
+      actions = [
+        "kms:CreateGrant"
+      ]
+      resources = ["*"]
+
+      principals {
+        type        = "AWS"
+        identifiers = var.key_service_roles_for_autoscaling
+      }
+
+      condition {
+        test     = "Bool"
+        variable = "kms:GrantIsForAWSResource"
+        values   = [true]
+      }
+    }
+  }
+
   # Key cryptographic operations - https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#key-policy-users-crypto
   dynamic "statement" {
     for_each = length(var.key_symmetric_encryption_users) > 0 ? [1] : []
