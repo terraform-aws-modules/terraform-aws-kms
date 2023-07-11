@@ -111,9 +111,16 @@ data "aws_iam_policy_document" "this" {
       actions   = ["kms:*"]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_owners
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_owners
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -142,9 +149,16 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_administrators
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_administrators
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -164,9 +178,16 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_users
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_users
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -184,15 +205,22 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
-      principals {
-        type        = "AWS"
-        identifiers = var.key_service_users
-      }
-
       condition {
         test     = "Bool"
         variable = "kms:GrantIsForAWSResource"
         values   = [true]
+      }
+
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_service_users
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
+      principals {
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -212,9 +240,16 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_service_roles_for_autoscaling
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_service_roles_for_autoscaling
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -229,15 +264,22 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
-      principals {
-        type        = "AWS"
-        identifiers = var.key_service_roles_for_autoscaling
-      }
-
       condition {
         test     = "Bool"
         variable = "kms:GrantIsForAWSResource"
         values   = [true]
+      }
+
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_service_roles_for_autoscaling
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
+      principals {
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -257,9 +299,16 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_symmetric_encryption_users
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_symmetric_encryption_users
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -276,9 +325,16 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_hmac_users
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_hmac_users
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -297,9 +353,16 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_asymmetric_public_encryption_users
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_asymmetric_public_encryption_users
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
@@ -317,9 +380,16 @@ data "aws_iam_policy_document" "this" {
       ]
       resources = ["*"]
 
+      condition {
+        test     = "ForAnyValue:ArnLike"
+        values   = var.key_asymmetric_sign_verify_users
+        variable = "aws:PrincipalArn"
+      }
+
+      # Required but redundant.
       principals {
-        type        = "AWS"
-        identifiers = var.key_asymmetric_sign_verify_users
+        type        = "*"
+        identifiers = ["*"]
       }
     }
   }
