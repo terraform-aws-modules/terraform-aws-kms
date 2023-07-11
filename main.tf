@@ -112,7 +112,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_owners
         variable = "aws:PrincipalArn"
       }
@@ -150,7 +150,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_administrators
         variable = "aws:PrincipalArn"
       }
@@ -179,7 +179,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_users
         variable = "aws:PrincipalArn"
       }
@@ -212,7 +212,7 @@ data "aws_iam_policy_document" "this" {
       }
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_service_users
         variable = "aws:PrincipalArn"
       }
@@ -241,7 +241,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_service_roles_for_autoscaling
         variable = "aws:PrincipalArn"
       }
@@ -271,7 +271,7 @@ data "aws_iam_policy_document" "this" {
       }
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_service_roles_for_autoscaling
         variable = "aws:PrincipalArn"
       }
@@ -300,7 +300,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_symmetric_encryption_users
         variable = "aws:PrincipalArn"
       }
@@ -326,7 +326,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_hmac_users
         variable = "aws:PrincipalArn"
       }
@@ -354,7 +354,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_asymmetric_public_encryption_users
         variable = "aws:PrincipalArn"
       }
@@ -381,7 +381,7 @@ data "aws_iam_policy_document" "this" {
       resources = ["*"]
 
       condition {
-        test     = "ForAnyValue:ArnLike"
+        test     = "ArnLike"
         values   = var.key_asymmetric_sign_verify_users
         variable = "aws:PrincipalArn"
       }
