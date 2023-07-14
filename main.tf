@@ -416,7 +416,7 @@ data "aws_iam_policy_document" "this" {
       }
 
       dynamic "condition" {
-        for_each = try(statement.value.conditions, [])
+        for_each = try(statement.value.condition, [])
 
         content {
           test     = condition.value.test
