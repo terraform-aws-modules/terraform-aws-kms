@@ -139,6 +139,8 @@ data "aws_iam_policy_document" "this" {
         "kms:UntagResource",
         "kms:ScheduleKeyDeletion",
         "kms:CancelKeyDeletion",
+        "kms:ReplicateKey",
+        "kms:ImportKeyMaterial"
       ]
       resources = ["*"]
 
