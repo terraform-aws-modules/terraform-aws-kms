@@ -32,6 +32,12 @@ variable "customer_master_key_spec" {
   default     = null
 }
 
+variable "custom_key_store_id" {
+  description = "ID of the KMS Custom Key Store where the key will be stored instead of KMS (eg CloudHSM)."
+  type        = string
+  default     = null
+}
+
 variable "deletion_window_in_days" {
   description = "The waiting period, specified in number of days. After the waiting period ends, AWS KMS deletes the KMS key. If you specify a value, it must be between `7` and `30`, inclusive. If you do not specify a value, it defaults to `30`"
   type        = number
