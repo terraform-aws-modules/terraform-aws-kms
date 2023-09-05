@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.5.0...v2.0.0) (2023-09-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* Added `custom_key_store_id`, bump version of AWS provider to 4.x (#23)
+
+### Features
+
+* Added `custom_key_store_id`, bump version of AWS provider to 4.x ([#23](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/23)) ([beb5667](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/beb56674a6e5db7dfa6cf70c9e953183d6574472))
+
 ## [1.5.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.4.0...v1.5.0) (2023-02-09)
 
 
