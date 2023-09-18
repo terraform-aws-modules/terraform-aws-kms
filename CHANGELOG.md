@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+### [2.0.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.0.0...v2.0.1) (2023-09-18)
+
+
+### Bug Fixes
+
+* Default admin permissions for special keys ([#24](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/24)) ([c975efd](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/c975efda5686fd7c9fb98518332617e4876e5317))
+
 ## [2.0.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v1.5.0...v2.0.0) (2023-09-05)
 
 
