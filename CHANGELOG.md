@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.0.1...v2.1.0) (2023-11-03)
+
+
+### Features
+
+* Do not call data resources when `create` is `false` ([#25](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/25)) ([4951c38](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/4951c38f3cd569411eb53476ac8502981083f5d2))
+
 ### [2.0.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.0.0...v2.0.1) (2023-09-18)
 
 
