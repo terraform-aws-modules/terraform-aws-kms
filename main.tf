@@ -1,5 +1,15 @@
-data "aws_partition" "current" {}
-data "aws_caller_identity" "current" {}
+data "aws_partition" "current" {
+  count = var.create ? 1 : 0
+}
+data "aws_caller_identity" "current" {
+  count = var.create ? 1 : 0
+}
+
+locals {
+  account_id = try(data.aws_caller_identity.current[0].account_id, "")
+  partition  = try(data.aws_partition.current[0].partition, "")
+  dns_suffix = try(data.aws_partition.current[0].dns_suffix, "")
+}
 
 ################################################################################
 # Key
@@ -98,7 +108,7 @@ data "aws_iam_policy_document" "this" {
 
       principals {
         type        = "AWS"
-        identifiers = ["arn:${data.aws_partition.current.partition}:iam::${data.aws_caller_identity.current.account_id}:root"]
+        identifiers = ["arn:${local.partition}:iam::${local.account_id}:root"]
       }
     }
   }
@@ -342,7 +352,7 @@ data "aws_iam_policy_document" "this" {
 
       principals {
         type        = "Service"
-        identifiers = ["dnssec-route53.${data.aws_partition.current.dns_suffix}"]
+        identifiers = ["dnssec-route53.${local.dns_suffix}"]
       }
     }
   }
@@ -358,7 +368,7 @@ data "aws_iam_policy_document" "this" {
 
       principals {
         type        = "Service"
-        identifiers = ["dnssec-route53.${data.aws_partition.current.dns_suffix}"]
+        identifiers = ["dnssec-route53.${local.dns_suffix}"]
       }
 
       condition {
@@ -373,7 +383,7 @@ data "aws_iam_policy_document" "this" {
         content {
           test     = "StringEquals"
           variable = "aws:SourceAccount"
-          values   = try(condition.value.account_ids, [data.aws_caller_identity.current.account_id])
+          values   = try(condition.value.account_ids, [local.account_id])
         }
       }
 
@@ -383,7 +393,7 @@ data "aws_iam_policy_document" "this" {
         content {
           test     = "ArnLike"
           variable = "aws:SourceArn"
-          values   = [try(condition.value.hosted_zone_arn, "arn:${data.aws_partition.current.partition}:route53:::hostedzone/*")]
+          values   = [try(condition.value.hosted_zone_arn, "arn:${local.partition}:route53:::hostedzone/*")]
         }
       }
     }
