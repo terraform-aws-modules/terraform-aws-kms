@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.1.0...v2.2.0) (2024-02-02)
+
+
+### Features
+
+* Add wrapper modules ([#26](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/26)) ([e6eba07](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/e6eba07467818a27670db60b3eb46f98dff19ef9))
+
 ## [2.1.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.0.1...v2.1.0) (2023-11-03)
 
 
