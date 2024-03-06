@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.2.0...v2.2.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* Update CI workflow versions to remove deprecated runtime warnings ([#28](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/28)) ([866950f](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/866950f91b3bc4411fa14d1f5c2c304145540d7f))
+
 ## [2.2.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.1.0...v2.2.0) (2024-02-02)
 
 
