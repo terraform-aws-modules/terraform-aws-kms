@@ -135,6 +135,12 @@ module "kms" {
 }
 ```
 
+### NIST Mode:
+
+For government, FedRAMP, and other regulated environments who need to maintain compliance with NIST standards, enabling NIST Mode sets certain values within the module to achieve these requirements. In this module, setting `nist_mode = true` supports NIST.800-53.r5 SC-12, SC-12(2), and SC-12(3** -- Cryptographic Key Establishment and Management by ensuring that key rotation in enabled.
+
+*Note:* Setting `nist_mode` to true in this module overrides any value for `enable_key_rotation`.
+
 ## Examples
 
 Examples codified under the [`examples`](https://github.com/terraform-aws-modules/terraform-aws-kms/tree/master/examples) are intended to give users references for how to use the module(s) as well as testing/validating changes to the source code of the module. If contributing to the project, please be sure to make any appropriate updates to the relevant examples to allow maintainers to test your changes and to keep the examples up to date for users. Thank you!
