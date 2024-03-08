@@ -23,7 +23,7 @@ resource "aws_kms_key" "this" {
   custom_key_store_id                = var.custom_key_store_id
   deletion_window_in_days            = var.deletion_window_in_days
   description                        = var.description
-  enable_key_rotation                = var.enable_key_rotation
+  enable_key_rotation                = var.nist_mode ? true : var.enable_key_rotation
   is_enabled                         = var.is_enabled
   key_usage                          = var.key_usage
   multi_region                       = var.multi_region
