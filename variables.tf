@@ -4,6 +4,12 @@ variable "create" {
   default     = true
 }
 
+variable "nist_mode" {
+  description = "Ensures compliance with NIST requirements. Overrides certain other variables. See README for documentation of the effects in this module."
+  type        = bool
+  default     = false
+}
+
 variable "tags" {
   description = "A map of tags to add to all resources"
   type        = map(string)
