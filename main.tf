@@ -28,6 +28,7 @@ resource "aws_kms_key" "this" {
   key_usage                          = var.key_usage
   multi_region                       = var.multi_region
   policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
+  rotation_period_in_days            = var.rotation_period_in_days
 
   tags = var.tags
 }

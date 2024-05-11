@@ -37,6 +37,7 @@ module "wrapper" {
   policy                                 = try(each.value.policy, var.defaults.policy, null)
   primary_external_key_arn               = try(each.value.primary_external_key_arn, var.defaults.primary_external_key_arn, null)
   primary_key_arn                        = try(each.value.primary_key_arn, var.defaults.primary_key_arn, null)
+  rotation_period_in_days                = try(each.value.rotation_period_in_days, var.defaults.rotation_period_in_days, null)
   route53_dnssec_sources                 = try(each.value.route53_dnssec_sources, var.defaults.route53_dnssec_sources, [])
   source_policy_documents                = try(each.value.source_policy_documents, var.defaults.source_policy_documents, [])
   tags                                   = try(each.value.tags, var.defaults.tags, {})

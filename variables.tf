@@ -182,6 +182,12 @@ variable "route53_dnssec_sources" {
   default     = []
 }
 
+variable "rotation_period_in_days" {
+  description = "Custom period of time between each rotation date. Must be a number between 90 and 2560 (inclusive)"
+  type        = number
+  default     = null
+}
+
 ################################################################################
 # Replica Key
 ################################################################################
