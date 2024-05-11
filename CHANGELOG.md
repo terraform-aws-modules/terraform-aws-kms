@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.2.1...v3.0.0) (2024-05-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Support `rotation_period_in_days`, AWS Provider v5, Terraform MSV 1.3 (#32)
+
+### Features
+
+* Support `rotation_period_in_days`, AWS Provider v5, Terraform MSV 1.3 ([#32](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/32)) ([f8c96ce](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/f8c96ce4bfc45fa2cb2e2cfa346d0d1930cdfce3))
+
 ## [2.2.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.2.0...v2.2.1) (2024-03-06)
 
 
