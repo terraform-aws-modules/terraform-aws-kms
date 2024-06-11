@@ -48,4 +48,5 @@ output "aliases" {
 output "grants" {
   description = "A map of grants created and their attributes"
   value       = aws_kms_grant.this
+  sensitive   = true
 }
