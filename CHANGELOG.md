@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v3.0.0...v3.1.0) (2024-06-12)
+
+
+### Features
+
+* Grants output marked as sensitive data ([#33](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/33)) ([965a52d](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/965a52d6686898897bce31d2f409e2ff9e8d5268))
+
 ## [3.0.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v2.2.1...v3.0.0) (2024-05-11)
 
 
