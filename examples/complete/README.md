@@ -19,7 +19,7 @@ $ terraform apply
 
 Note that this example may create resources which will incur monetary charges on your AWS bill. Run `terraform destroy` when you no longer need these resources.
 
-<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -103,6 +103,6 @@ No inputs.
 | <a name="output_replica_key_policy"></a> [replica\_key\_policy](#output\_replica\_key\_policy) | The IAM resource policy set on the key |
 | <a name="output_replica_key_state"></a> [replica\_key\_state](#output\_replica\_key\_state) | The state of the CMK |
 | <a name="output_replica_key_usage"></a> [replica\_key\_usage](#output\_replica\_key\_usage) | The cryptographic operations for which you can use the CMK |
-<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+<!-- END_TF_DOCS -->
 
 Apache-2.0 Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-aws-kms/blob/master/LICENSE).
