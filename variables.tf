@@ -5,7 +5,7 @@ variable "create" {
 }
 
 variable "region" {
-  description = "(Optional) Region where the resources will be managed. Defaults to the region set in the provider configuration."
+  description = "(Optional) The Region where the resources will be managed. Defaults to the region set in the provider configuration."
   type        = string
   default     = null
 }

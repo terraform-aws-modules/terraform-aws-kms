@@ -147,13 +147,13 @@ Examples codified under the [`examples`](https://github.com/terraform-aws-module
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 5.49 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.00 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 5.49 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.00 |
 
 ## Modules
 
@@ -211,6 +211,7 @@ No modules.
 | <a name="input_policy"></a> [policy](#input\_policy) | A valid policy JSON document. Although this is a key policy, not an IAM policy, an `aws_iam_policy_document`, in the form that designates a principal, can be used | `string` | `null` | no |
 | <a name="input_primary_external_key_arn"></a> [primary\_external\_key\_arn](#input\_primary\_external\_key\_arn) | The primary external key arn of a multi-region replica external key | `string` | `null` | no |
 | <a name="input_primary_key_arn"></a> [primary\_key\_arn](#input\_primary\_key\_arn) | The primary key arn of a multi-region replica key | `string` | `null` | no |
+| <a name="input_region"></a> [region](#input\_region) | (Optional) The Region where the resources will be managed. Defaults to the region set in the provider configuration. | `string` | `null` | no |
 | <a name="input_rotation_period_in_days"></a> [rotation\_period\_in\_days](#input\_rotation\_period\_in\_days) | Custom period of time between each rotation date. Must be a number between 90 and 2560 (inclusive) | `number` | `null` | no |
 | <a name="input_route53_dnssec_sources"></a> [route53\_dnssec\_sources](#input\_route53\_dnssec\_sources) | A list of maps containing `account_ids` and Route53 `hosted_zone_arn` that will be allowed to sign DNSSEC records | `list(any)` | `[]` | no |
 | <a name="input_source_policy_documents"></a> [source\_policy\_documents](#input\_source\_policy\_documents) | List of IAM policy documents that are merged together into the exported document. Statements must have unique `sid`s | `list(string)` | `[]` | no |
@@ -229,6 +230,7 @@ No modules.
 | <a name="output_key_arn"></a> [key\_arn](#output\_key\_arn) | The Amazon Resource Name (ARN) of the key |
 | <a name="output_key_id"></a> [key\_id](#output\_key\_id) | The globally unique identifier for the key |
 | <a name="output_key_policy"></a> [key\_policy](#output\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_key_region"></a> [key\_region](#output\_key\_region) | The region for the key |
 <!-- END_TF_DOCS -->
 
 ## License
