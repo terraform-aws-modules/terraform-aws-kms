@@ -38,14 +38,23 @@ Note that this example may create resources which will incur monetary charges on
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_kms_complete"></a> [kms\_complete](#module\_kms\_complete) | ../.. | n/a |
+| <a name="module_kms_complete_other_region"></a> [kms\_complete\_other\_region](#module\_kms\_complete\_other\_region) | ../.. | n/a |
 | <a name="module_kms_default"></a> [kms\_default](#module\_kms\_default) | ../.. | n/a |
+| <a name="module_kms_default_other_region"></a> [kms\_default\_other\_region](#module\_kms\_default\_other\_region) | ../.. | n/a |
 | <a name="module_kms_disabled"></a> [kms\_disabled](#module\_kms\_disabled) | ../.. | n/a |
 | <a name="module_kms_dnssec_signing"></a> [kms\_dnssec\_signing](#module\_kms\_dnssec\_signing) | ../.. | n/a |
+| <a name="module_kms_dnssec_signing_other_region"></a> [kms\_dnssec\_signing\_other\_region](#module\_kms\_dnssec\_signing\_other\_region) | ../.. | n/a |
 | <a name="module_kms_external"></a> [kms\_external](#module\_kms\_external) | ../.. | n/a |
+| <a name="module_kms_external_other_region"></a> [kms\_external\_other\_region](#module\_kms\_external\_other\_region) | ../.. | n/a |
+| <a name="module_kms_other_region_disabled"></a> [kms\_other\_region\_disabled](#module\_kms\_other\_region\_disabled) | ../.. | n/a |
 | <a name="module_kms_primary"></a> [kms\_primary](#module\_kms\_primary) | ../.. | n/a |
 | <a name="module_kms_primary_external"></a> [kms\_primary\_external](#module\_kms\_primary\_external) | ../.. | n/a |
+| <a name="module_kms_primary_external_other_region"></a> [kms\_primary\_external\_other\_region](#module\_kms\_primary\_external\_other\_region) | ../.. | n/a |
+| <a name="module_kms_primary_other_region"></a> [kms\_primary\_other\_region](#module\_kms\_primary\_other\_region) | ../.. | n/a |
 | <a name="module_kms_replica"></a> [kms\_replica](#module\_kms\_replica) | ../.. | n/a |
 | <a name="module_kms_replica_external"></a> [kms\_replica\_external](#module\_kms\_replica\_external) | ../.. | n/a |
+| <a name="module_kms_replica_external_other_region"></a> [kms\_replica\_external\_other\_region](#module\_kms\_replica\_external\_other\_region) | ../.. | n/a |
+| <a name="module_kms_replica_other_region"></a> [kms\_replica\_other\_region](#module\_kms\_replica\_other\_region) | ../.. | n/a |
 
 ## Resources
 
@@ -54,6 +63,7 @@ Note that this example may create resources which will incur monetary charges on
 | [aws_iam_role.lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 | [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
+| [aws_region.replica](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
 
@@ -71,6 +81,16 @@ No inputs.
 | <a name="output_complete_key_arn"></a> [complete\_key\_arn](#output\_complete\_key\_arn) | The Amazon Resource Name (ARN) of the key |
 | <a name="output_complete_key_id"></a> [complete\_key\_id](#output\_complete\_key\_id) | The globally unique identifier for the key |
 | <a name="output_complete_key_policy"></a> [complete\_key\_policy](#output\_complete\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_complete_key_region"></a> [complete\_key\_region](#output\_complete\_key\_region) | The region for the key |
+| <a name="output_complete_other_region_aliases"></a> [complete\_other\_region\_aliases](#output\_complete\_other\_region\_aliases) | A map of aliases created and their attributes |
+| <a name="output_complete_other_region_external_key_expiration_model"></a> [complete\_other\_region\_external\_key\_expiration\_model](#output\_complete\_other\_region\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
+| <a name="output_complete_other_region_external_key_state"></a> [complete\_other\_region\_external\_key\_state](#output\_complete\_other\_region\_external\_key\_state) | The state of the CMK |
+| <a name="output_complete_other_region_external_key_usage"></a> [complete\_other\_region\_external\_key\_usage](#output\_complete\_other\_region\_external\_key\_usage) | The cryptographic operations for which you can use the CMK |
+| <a name="output_complete_other_region_grants"></a> [complete\_other\_region\_grants](#output\_complete\_other\_region\_grants) | A map of grants created and their attributes |
+| <a name="output_complete_other_region_key_arn"></a> [complete\_other\_region\_key\_arn](#output\_complete\_other\_region\_key\_arn) | The Amazon Resource Name (ARN) of the key |
+| <a name="output_complete_other_region_key_id"></a> [complete\_other\_region\_key\_id](#output\_complete\_other\_region\_key\_id) | The globally unique identifier for the key |
+| <a name="output_complete_other_region_key_policy"></a> [complete\_other\_region\_key\_policy](#output\_complete\_other\_region\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_complete_other_region_key_region"></a> [complete\_other\_region\_key\_region](#output\_complete\_other\_region\_key\_region) | The region for the key |
 | <a name="output_default_aliases"></a> [default\_aliases](#output\_default\_aliases) | A map of aliases created and their attributes |
 | <a name="output_default_external_key_expiration_model"></a> [default\_external\_key\_expiration\_model](#output\_default\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
 | <a name="output_default_external_key_state"></a> [default\_external\_key\_state](#output\_default\_external\_key\_state) | The state of the CMK |
@@ -79,6 +99,16 @@ No inputs.
 | <a name="output_default_key_arn"></a> [default\_key\_arn](#output\_default\_key\_arn) | The Amazon Resource Name (ARN) of the key |
 | <a name="output_default_key_id"></a> [default\_key\_id](#output\_default\_key\_id) | The globally unique identifier for the key |
 | <a name="output_default_key_policy"></a> [default\_key\_policy](#output\_default\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_default_key_region"></a> [default\_key\_region](#output\_default\_key\_region) | The region for the key |
+| <a name="output_default_other_region_aliases"></a> [default\_other\_region\_aliases](#output\_default\_other\_region\_aliases) | A map of aliases created and their attributes |
+| <a name="output_default_other_region_external_key_expiration_model"></a> [default\_other\_region\_external\_key\_expiration\_model](#output\_default\_other\_region\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
+| <a name="output_default_other_region_external_key_state"></a> [default\_other\_region\_external\_key\_state](#output\_default\_other\_region\_external\_key\_state) | The state of the CMK |
+| <a name="output_default_other_region_external_key_usage"></a> [default\_other\_region\_external\_key\_usage](#output\_default\_other\_region\_external\_key\_usage) | The cryptographic operations for which you can use the CMK |
+| <a name="output_default_other_region_grants"></a> [default\_other\_region\_grants](#output\_default\_other\_region\_grants) | A map of grants created and their attributes |
+| <a name="output_default_other_region_key_arn"></a> [default\_other\_region\_key\_arn](#output\_default\_other\_region\_key\_arn) | The Amazon Resource Name (ARN) of the key |
+| <a name="output_default_other_region_key_id"></a> [default\_other\_region\_key\_id](#output\_default\_other\_region\_key\_id) | The globally unique identifier for the key |
+| <a name="output_default_other_region_key_policy"></a> [default\_other\_region\_key\_policy](#output\_default\_other\_region\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_default_other_region_key_region"></a> [default\_other\_region\_key\_region](#output\_default\_other\_region\_key\_region) | The region for the key |
 | <a name="output_external_aliases"></a> [external\_aliases](#output\_external\_aliases) | A map of aliases created and their attributes |
 | <a name="output_external_external_key_expiration_model"></a> [external\_external\_key\_expiration\_model](#output\_external\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
 | <a name="output_external_external_key_state"></a> [external\_external\_key\_state](#output\_external\_external\_key\_state) | The state of the CMK |
@@ -87,6 +117,16 @@ No inputs.
 | <a name="output_external_key_arn"></a> [external\_key\_arn](#output\_external\_key\_arn) | The Amazon Resource Name (ARN) of the key |
 | <a name="output_external_key_id"></a> [external\_key\_id](#output\_external\_key\_id) | The globally unique identifier for the key |
 | <a name="output_external_key_policy"></a> [external\_key\_policy](#output\_external\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_external_key_region"></a> [external\_key\_region](#output\_external\_key\_region) | The region for the key |
+| <a name="output_external_other_region_aliases"></a> [external\_other\_region\_aliases](#output\_external\_other\_region\_aliases) | A map of aliases created and their attributes |
+| <a name="output_external_other_region_external_key_expiration_model"></a> [external\_other\_region\_external\_key\_expiration\_model](#output\_external\_other\_region\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
+| <a name="output_external_other_region_external_key_state"></a> [external\_other\_region\_external\_key\_state](#output\_external\_other\_region\_external\_key\_state) | The state of the CMK |
+| <a name="output_external_other_region_external_key_usage"></a> [external\_other\_region\_external\_key\_usage](#output\_external\_other\_region\_external\_key\_usage) | The cryptographic operations for which you can use the CMK |
+| <a name="output_external_other_region_grants"></a> [external\_other\_region\_grants](#output\_external\_other\_region\_grants) | A map of grants created and their attributes |
+| <a name="output_external_other_region_key_arn"></a> [external\_other\_region\_key\_arn](#output\_external\_other\_region\_key\_arn) | The Amazon Resource Name (ARN) of the key |
+| <a name="output_external_other_region_key_id"></a> [external\_other\_region\_key\_id](#output\_external\_other\_region\_key\_id) | The globally unique identifier for the key |
+| <a name="output_external_other_region_key_policy"></a> [external\_other\_region\_key\_policy](#output\_external\_other\_region\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_external_other_region_key_region"></a> [external\_other\_region\_key\_region](#output\_external\_other\_region\_key\_region) | The region for the key |
 | <a name="output_replica_aliases"></a> [replica\_aliases](#output\_replica\_aliases) | A map of aliases created and their attributes |
 | <a name="output_replica_external_aliases"></a> [replica\_external\_aliases](#output\_replica\_external\_aliases) | A map of aliases created and their attributes |
 | <a name="output_replica_external_arn"></a> [replica\_external\_arn](#output\_replica\_external\_arn) | The Amazon Resource Name (ARN) of the key |
@@ -94,6 +134,7 @@ No inputs.
 | <a name="output_replica_external_key_expiration_model"></a> [replica\_external\_key\_expiration\_model](#output\_replica\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
 | <a name="output_replica_external_key_id"></a> [replica\_external\_key\_id](#output\_replica\_external\_key\_id) | The globally unique identifier for the key |
 | <a name="output_replica_external_key_policy"></a> [replica\_external\_key\_policy](#output\_replica\_external\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_replica_external_key_region"></a> [replica\_external\_key\_region](#output\_replica\_external\_key\_region) | The region for the key |
 | <a name="output_replica_external_key_state"></a> [replica\_external\_key\_state](#output\_replica\_external\_key\_state) | The state of the CMK |
 | <a name="output_replica_external_key_usage"></a> [replica\_external\_key\_usage](#output\_replica\_external\_key\_usage) | The cryptographic operations for which you can use the CMK |
 | <a name="output_replica_grants"></a> [replica\_grants](#output\_replica\_grants) | A map of grants created and their attributes |
@@ -101,8 +142,27 @@ No inputs.
 | <a name="output_replica_key_expiration_model"></a> [replica\_key\_expiration\_model](#output\_replica\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
 | <a name="output_replica_key_id"></a> [replica\_key\_id](#output\_replica\_key\_id) | The globally unique identifier for the key |
 | <a name="output_replica_key_policy"></a> [replica\_key\_policy](#output\_replica\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_replica_key_region"></a> [replica\_key\_region](#output\_replica\_key\_region) | The region for the key |
 | <a name="output_replica_key_state"></a> [replica\_key\_state](#output\_replica\_key\_state) | The state of the CMK |
 | <a name="output_replica_key_usage"></a> [replica\_key\_usage](#output\_replica\_key\_usage) | The cryptographic operations for which you can use the CMK |
+| <a name="output_replica_other_region_aliases"></a> [replica\_other\_region\_aliases](#output\_replica\_other\_region\_aliases) | A map of aliases created and their attributes |
+| <a name="output_replica_other_region_external_aliases"></a> [replica\_other\_region\_external\_aliases](#output\_replica\_other\_region\_external\_aliases) | A map of aliases created and their attributes |
+| <a name="output_replica_other_region_external_arn"></a> [replica\_other\_region\_external\_arn](#output\_replica\_other\_region\_external\_arn) | The Amazon Resource Name (ARN) of the key |
+| <a name="output_replica_other_region_external_grants"></a> [replica\_other\_region\_external\_grants](#output\_replica\_other\_region\_external\_grants) | A map of grants created and their attributes |
+| <a name="output_replica_other_region_external_key_expiration_model"></a> [replica\_other\_region\_external\_key\_expiration\_model](#output\_replica\_other\_region\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
+| <a name="output_replica_other_region_external_key_id"></a> [replica\_other\_region\_external\_key\_id](#output\_replica\_other\_region\_external\_key\_id) | The globally unique identifier for the key |
+| <a name="output_replica_other_region_external_key_policy"></a> [replica\_other\_region\_external\_key\_policy](#output\_replica\_other\_region\_external\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_replica_other_region_external_key_region"></a> [replica\_other\_region\_external\_key\_region](#output\_replica\_other\_region\_external\_key\_region) | The region for the key |
+| <a name="output_replica_other_region_external_key_state"></a> [replica\_other\_region\_external\_key\_state](#output\_replica\_other\_region\_external\_key\_state) | The state of the CMK |
+| <a name="output_replica_other_region_external_key_usage"></a> [replica\_other\_region\_external\_key\_usage](#output\_replica\_other\_region\_external\_key\_usage) | The cryptographic operations for which you can use the CMK |
+| <a name="output_replica_other_region_grants"></a> [replica\_other\_region\_grants](#output\_replica\_other\_region\_grants) | A map of grants created and their attributes |
+| <a name="output_replica_other_region_key_arn"></a> [replica\_other\_region\_key\_arn](#output\_replica\_other\_region\_key\_arn) | The Amazon Resource Name (ARN) of the key |
+| <a name="output_replica_other_region_key_expiration_model"></a> [replica\_other\_region\_key\_expiration\_model](#output\_replica\_other\_region\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
+| <a name="output_replica_other_region_key_id"></a> [replica\_other\_region\_key\_id](#output\_replica\_other\_region\_key\_id) | The globally unique identifier for the key |
+| <a name="output_replica_other_region_key_policy"></a> [replica\_other\_region\_key\_policy](#output\_replica\_other\_region\_key\_policy) | The IAM resource policy set on the key |
+| <a name="output_replica_other_region_key_region"></a> [replica\_other\_region\_key\_region](#output\_replica\_other\_region\_key\_region) | The region for the key |
+| <a name="output_replica_other_region_key_state"></a> [replica\_other\_region\_key\_state](#output\_replica\_other\_region\_key\_state) | The state of the CMK |
+| <a name="output_replica_other_region_key_usage"></a> [replica\_other\_region\_key\_usage](#output\_replica\_other\_region\_key\_usage) | The cryptographic operations for which you can use the CMK |
 <!-- END_TF_DOCS -->
 
 Apache-2.0 Licensed. See [LICENSE](https://github.com/terraform-aws-modules/terraform-aws-kms/blob/master/LICENSE).
