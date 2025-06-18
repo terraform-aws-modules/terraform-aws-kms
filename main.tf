@@ -26,6 +26,7 @@ resource "aws_kms_key" "this" {
   enable_key_rotation                = var.enable_key_rotation
   is_enabled                         = var.is_enabled
   key_usage                          = var.key_usage
+  region                             = var.region
   multi_region                       = var.multi_region
   policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
   rotation_period_in_days            = var.rotation_period_in_days
@@ -45,6 +46,7 @@ resource "aws_kms_external_key" "this" {
   description                        = var.description
   enabled                            = var.is_enabled
   key_material_base64                = var.key_material_base64
+  region                             = var.region
   multi_region                       = var.multi_region
   policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
   valid_to                           = var.valid_to
@@ -65,6 +67,7 @@ resource "aws_kms_replica_key" "this" {
   primary_key_arn                    = var.primary_key_arn
   enabled                            = var.is_enabled
   policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
+  region                             = var.region
 
   tags = var.tags
 }
@@ -84,6 +87,7 @@ resource "aws_kms_replica_external_key" "this" {
   policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
   primary_key_arn                    = var.primary_external_key_arn
   valid_to                           = var.valid_to
+  region                             = var.region
 
   tags = var.tags
 }
@@ -456,6 +460,7 @@ resource "aws_kms_alias" "this" {
   name          = var.aliases_use_name_prefix ? null : "alias/${each.value.name}"
   name_prefix   = var.aliases_use_name_prefix ? "alias/${each.value.name}-" : null
   target_key_id = try(aws_kms_key.this[0].key_id, aws_kms_external_key.this[0].id, aws_kms_replica_key.this[0].key_id, aws_kms_replica_external_key.this[0].key_id)
+  region        = var.region
 }
 
 ################################################################################
@@ -469,6 +474,7 @@ resource "aws_kms_grant" "this" {
   key_id            = try(aws_kms_key.this[0].key_id, aws_kms_external_key.this[0].id, aws_kms_replica_key.this[0].key_id, aws_kms_replica_external_key.this[0].key_id)
   grantee_principal = each.value.grantee_principal
   operations        = each.value.operations
+  region            = var.region
 
   dynamic "constraints" {
     for_each = length(lookup(each.value, "constraints", {})) == 0 ? [] : [each.value.constraints]

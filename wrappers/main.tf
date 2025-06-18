@@ -32,6 +32,7 @@ module "wrapper" {
   key_symmetric_encryption_users         = try(each.value.key_symmetric_encryption_users, var.defaults.key_symmetric_encryption_users, [])
   key_usage                              = try(each.value.key_usage, var.defaults.key_usage, null)
   key_users                              = try(each.value.key_users, var.defaults.key_users, [])
+  region                                 = try(each.value.region, var.defaults.region, null)
   multi_region                           = try(each.value.multi_region, var.defaults.multi_region, false)
   override_policy_documents              = try(each.value.override_policy_documents, var.defaults.override_policy_documents, [])
   policy                                 = try(each.value.policy, var.defaults.policy, null)
