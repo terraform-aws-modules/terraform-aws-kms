@@ -2,10 +2,14 @@ provider "aws" {
   region = local.region
 }
 
+data "aws_caller_identity" "current" {}
+
 locals {
-  region           = "us-east-1"
-  replica_region   = "eu-west-1"
-  name             = "kms-ex-${replace(basename(path.cwd), "_", "-")}"
+  region         = "us-east-1"
+  replica_region = "eu-west-1"
+  name           = "kms-ex-${replace(basename(path.cwd), "_", "-")}"
+
+  account_id       = data.aws_caller_identity.current.account_id
   current_identity = data.aws_caller_identity.current.arn
 
   tags = {
@@ -13,12 +17,6 @@ locals {
     Example    = "complete"
     Repository = "https://github.com/terraform-aws-modules/terraform-aws-kms"
   }
-}
-
-data "aws_caller_identity" "current" {}
-data "aws_region" "current" {}
-data "aws_region" "replica" {
-  region = local.region
 }
 
 ################################################################################
@@ -41,7 +39,7 @@ module "kms_complete" {
   key_administrators                     = [local.current_identity]
   key_users                              = [local.current_identity]
   key_service_users                      = [local.current_identity]
-  key_service_roles_for_autoscaling      = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
+  key_service_roles_for_autoscaling      = ["arn:aws:iam::${local.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
   key_symmetric_encryption_users         = [local.current_identity]
   key_hmac_users                         = [local.current_identity]
   key_asymmetric_public_encryption_users = [local.current_identity]
@@ -61,7 +59,7 @@ module "kms_complete" {
       principals = [
         {
           type        = "Service"
-          identifiers = ["logs.${data.aws_region.current.region}.amazonaws.com"]
+          identifiers = ["logs.${local.region}.amazonaws.com"]
         }
       ]
 
@@ -70,7 +68,7 @@ module "kms_complete" {
           test     = "ArnLike"
           variable = "kms:EncryptionContext:aws:logs:arn"
           values = [
-            "arn:aws:logs:${local.region}:${data.aws_caller_identity.current.account_id}:log-group:*",
+            "arn:aws:logs:${local.region}:${local.account_id}:log-group:*",
           ]
         }
       ]
@@ -124,7 +122,7 @@ module "kms_complete_other_region" {
   key_administrators                     = [local.current_identity]
   key_users                              = [local.current_identity]
   key_service_users                      = [local.current_identity]
-  key_service_roles_for_autoscaling      = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
+  key_service_roles_for_autoscaling      = ["arn:aws:iam::${local.account_id}:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling"]
   key_symmetric_encryption_users         = [local.current_identity]
   key_hmac_users                         = [local.current_identity]
   key_asymmetric_public_encryption_users = [local.current_identity]
@@ -144,7 +142,7 @@ module "kms_complete_other_region" {
       principals = [
         {
           type        = "Service"
-          identifiers = ["logs.${data.aws_region.replica.region}.amazonaws.com"]
+          identifiers = ["logs.${local.replica_region}.amazonaws.com"]
         }
       ]
 
@@ -153,7 +151,7 @@ module "kms_complete_other_region" {
           test     = "ArnLike"
           variable = "kms:EncryptionContext:aws:logs:arn"
           values = [
-            "arn:aws:logs:${local.replica_region}:${data.aws_caller_identity.current.account_id}:log-group:*",
+            "arn:aws:logs:${local.replica_region}:${local.account_id}:log-group:*",
           ]
         }
       ]
@@ -231,8 +229,8 @@ module "kms_dnssec_signing" {
   enable_key_rotation   = false
   route53_dnssec_sources = [
     {
-      accounts_ids    = [data.aws_caller_identity.current.account_id] # can ommit if using current account ID which is default
-      hosted_zone_arn = "arn:aws:route53:::hostedzone/*"              # can ommit, this is default value
+      accounts_ids    = [local.account_id]               # can ommit if using current account ID which is default
+      hosted_zone_arn = "arn:aws:route53:::hostedzone/*" # can ommit, this is default value
     }
   ]
 
@@ -253,8 +251,8 @@ module "kms_dnssec_signing_other_region" {
   enable_key_rotation   = false
   route53_dnssec_sources = [
     {
-      accounts_ids    = [data.aws_caller_identity.current.account_id] # can ommit if using current account ID which is default
-      hosted_zone_arn = "arn:aws:route53:::hostedzone/*"              # can ommit, this is default value
+      accounts_ids    = [local.account_id]               # can ommit if using current account ID which is default
+      hosted_zone_arn = "arn:aws:route53:::hostedzone/*" # can ommit, this is default value
     }
   ]
   region = local.replica_region
