@@ -280,11 +280,11 @@ variable "aliases_use_name_prefix" {
 variable "grants" {
   description = "A map of grant definitions to create"
   type = map(object({
-    constraints = optional(object({
+    constraints = optional(list(object({
       encryption_context_equals = optional(map(string))
       encryption_context_subset = optional(map(string))
-    }))
-    grant_creation_tokens = optional(string)
+    })))
+    grant_creation_tokens = optional(list(string))
     grantee_principal     = string
     name                  = optional(string) # Will fall back to use map key
     operations            = list(string)
