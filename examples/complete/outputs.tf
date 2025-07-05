@@ -40,6 +40,7 @@ output "complete_aliases" {
 output "complete_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_complete.grants
+  sensitive   = true
 }
 
 ################################################################################
@@ -84,6 +85,7 @@ output "external_aliases" {
 output "external_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_external.grants
+  sensitive   = true
 }
 
 ################################################################################
@@ -128,8 +130,8 @@ output "default_aliases" {
 output "default_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_default.grants
+  sensitive   = true
 }
-
 
 ################################################################################
 # Replica
@@ -173,8 +175,8 @@ output "replica_aliases" {
 output "replica_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_replica.grants
+  sensitive   = true
 }
-
 
 ################################################################################
 # Replica External
@@ -218,4 +220,5 @@ output "replica_external_aliases" {
 output "replica_external_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_replica_external.grants
+  sensitive   = true
 }
