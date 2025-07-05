@@ -5,9 +5,8 @@ provider "aws" {
 data "aws_caller_identity" "current" {}
 
 locals {
-  region         = "us-east-1"
-  replica_region = "eu-west-1"
-  name           = "kms-ex-${replace(basename(path.cwd), "_", "-")}"
+  region = "us-east-1"
+  name   = "kms-ex-${basename(path.cwd)}"
 
   account_id       = data.aws_caller_identity.current.account_id
   current_identity = data.aws_caller_identity.current.arn
@@ -114,7 +113,7 @@ module "kms_external" {
   is_enabled              = true
   key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
   multi_region            = false
-  valid_to                = "2025-11-21T23:20:50Z"
+  valid_to                = "2023-11-21T23:20:50Z"
 
   tags = local.tags
 }
@@ -172,8 +171,17 @@ module "kms_primary" {
   tags = local.tags
 }
 
+provider "aws" {
+  region = "eu-west-1"
+  alias  = "replica"
+}
+
 module "kms_replica" {
   source = "../.."
+
+  providers = {
+    aws = aws.replica
+  }
 
   deletion_window_in_days = 7
   description             = "Replica key example showing various configurations available"
@@ -211,8 +219,6 @@ module "kms_replica" {
     }
   }
 
-  region = local.replica_region
-
   tags = local.tags
 }
 
@@ -229,7 +235,7 @@ module "kms_primary_external" {
   create_external         = true
   key_material_base64     = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
   multi_region            = true
-  valid_to                = "2025-11-21T23:20:50Z"
+  valid_to                = "2023-11-21T23:20:50Z"
 
   aliases = ["primary-external"]
 
@@ -239,6 +245,10 @@ module "kms_primary_external" {
 module "kms_replica_external" {
   source = "../.."
 
+  providers = {
+    aws = aws.replica
+  }
+
   deletion_window_in_days = 7
   description             = "Replica external key example showing various configurations available"
   create_replica_external = true
@@ -246,7 +256,7 @@ module "kms_replica_external" {
   # key material must be the same as the primary's
   key_material_base64      = "Wblj06fduthWggmsT0cLVoIMOkeLbc2kVfMud77i/JY="
   primary_external_key_arn = module.kms_primary_external.key_arn
-  valid_to                 = "2025-11-21T23:20:50Z"
+  valid_to                 = "2023-11-21T23:20:50Z"
 
   aliases = ["replica-external"]
 
@@ -262,8 +272,6 @@ module "kms_replica_external" {
       }
     }
   }
-
-  region = local.replica_region
 
   tags = local.tags
 }

@@ -12,11 +12,6 @@ output "complete_key_id" {
   value       = module.kms_complete.key_id
 }
 
-output "complete_key_region" {
-  description = "The region for the key"
-  value       = module.kms_complete.key_region
-}
-
 output "complete_key_policy" {
   description = "The IAM resource policy set on the key"
   value       = module.kms_complete.key_policy
@@ -45,7 +40,6 @@ output "complete_aliases" {
 output "complete_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_complete.grants
-  sensitive   = true
 }
 
 ################################################################################
@@ -60,11 +54,6 @@ output "external_key_arn" {
 output "external_key_id" {
   description = "The globally unique identifier for the key"
   value       = module.kms_external.key_id
-}
-
-output "external_key_region" {
-  description = "The region for the key"
-  value       = module.kms_external.key_region
 }
 
 output "external_key_policy" {
@@ -111,11 +100,6 @@ output "default_key_id" {
   value       = module.kms_default.key_id
 }
 
-output "default_key_region" {
-  description = "The region for the key"
-  value       = module.kms_default.key_region
-}
-
 output "default_key_policy" {
   description = "The IAM resource policy set on the key"
   value       = module.kms_default.key_policy
@@ -146,6 +130,7 @@ output "default_grants" {
   value       = module.kms_default.grants
 }
 
+
 ################################################################################
 # Replica
 ################################################################################
@@ -158,11 +143,6 @@ output "replica_key_arn" {
 output "replica_key_id" {
   description = "The globally unique identifier for the key"
   value       = module.kms_replica.key_id
-}
-
-output "replica_key_region" {
-  description = "The region for the key"
-  value       = module.kms_replica.key_region
 }
 
 output "replica_key_policy" {
@@ -193,8 +173,8 @@ output "replica_aliases" {
 output "replica_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_replica.grants
-  sensitive   = true
 }
+
 
 ################################################################################
 # Replica External
@@ -208,11 +188,6 @@ output "replica_external_arn" {
 output "replica_external_key_id" {
   description = "The globally unique identifier for the key"
   value       = module.kms_replica_external.key_id
-}
-
-output "replica_external_key_region" {
-  description = "The region for the key"
-  value       = module.kms_replica_external.key_region
 }
 
 output "replica_external_key_policy" {
@@ -243,5 +218,4 @@ output "replica_external_aliases" {
 output "replica_external_grants" {
   description = "A map of grants created and their attributes"
   value       = module.kms_replica_external.grants
-  sensitive   = true
 }
