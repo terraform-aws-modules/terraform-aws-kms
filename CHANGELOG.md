@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.0.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v3.1.1...v4.0.0) (2025-07-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.5.7` respectively (#36)
+
+### Features
+
+* Upgrade AWS provider and min required Terraform version to `6.0` and `1.5.7` respectively ([#36](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/36)) ([210736c](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/210736c7aaf2394a68e5f85de4e29169ac126363))
+
 ## [3.1.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v3.1.0...v3.1.1) (2024-10-11)
 
 
