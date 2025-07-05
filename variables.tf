@@ -5,7 +5,7 @@ variable "create" {
 }
 
 variable "region" {
-  description = "(Optional) The Region where the resources will be managed. Defaults to the region set in the provider configuration."
+  description = "Region where the resource(s) will be managed. Defaults to the Region set in the provider configuration"
   type        = string
   default     = null
 }
@@ -160,8 +160,28 @@ variable "key_asymmetric_sign_verify_users" {
 
 variable "key_statements" {
   description = "A map of IAM policy [statements](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document#statement) for custom permission usage"
-  type        = any
-  default     = {}
+  type = list(object({
+    sid           = optional(string)
+    actions       = optional(list(string))
+    not_actions   = optional(list(string))
+    effect        = optional(string)
+    resources     = optional(list(string))
+    not_resources = optional(list(string))
+    principals = optional(list(object({
+      type        = string
+      identifiers = list(string)
+    })))
+    not_principals = optional(list(object({
+      type        = string
+      identifiers = list(string)
+    })))
+    condition = optional(list(object({
+      test     = string
+      values   = list(string)
+      variable = string
+    })))
+  }))
+  default = null
 }
 
 variable "source_policy_documents" {
@@ -184,8 +204,11 @@ variable "enable_route53_dnssec" {
 
 variable "route53_dnssec_sources" {
   description = "A list of maps containing `account_ids` and Route53 `hosted_zone_arn` that will be allowed to sign DNSSEC records"
-  type        = list(any)
-  default     = []
+  type = list(object({
+    account_ids     = optional(list(string))
+    hosted_zone_arn = optional(string)
+  }))
+  default = null
 }
 
 variable "rotation_period_in_days" {
@@ -238,8 +261,10 @@ variable "aliases" {
 
 variable "computed_aliases" {
   description = "A map of aliases to create. Values provided via the `name` key of the map can be computed from upstream resources"
-  type        = any
-  default     = {}
+  type = map(object({
+    name = string
+  }))
+  default = {}
 }
 
 variable "aliases_use_name_prefix" {
@@ -254,6 +279,17 @@ variable "aliases_use_name_prefix" {
 
 variable "grants" {
   description = "A map of grant definitions to create"
-  type        = any
-  default     = {}
+  type = map(object({
+    constraints = optional(object({
+      encryption_context_equals = optional(map(string))
+      encryption_context_subset = optional(map(string))
+    }))
+    grant_creation_tokens = optional(string)
+    grantee_principal     = string
+    name                  = optional(string) # Will fall back to use map key
+    operations            = list(string)
+    retire_on_delete      = optional(bool)
+    retiring_principal    = optional(string)
+  }))
+  default = null
 }
