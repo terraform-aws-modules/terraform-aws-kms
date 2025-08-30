@@ -49,6 +49,8 @@ resource "aws_kms_external_key" "this" {
   description                        = var.description
   enabled                            = var.is_enabled
   key_material_base64                = var.key_material_base64
+  key_spec                           = var.key_spec
+  key_usage                          = var.key_usage
   multi_region                       = var.multi_region
   policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
   valid_to                           = var.valid_to

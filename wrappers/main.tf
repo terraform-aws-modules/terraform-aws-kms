@@ -28,6 +28,7 @@ module "wrapper" {
   key_owners                             = try(each.value.key_owners, var.defaults.key_owners, [])
   key_service_roles_for_autoscaling      = try(each.value.key_service_roles_for_autoscaling, var.defaults.key_service_roles_for_autoscaling, [])
   key_service_users                      = try(each.value.key_service_users, var.defaults.key_service_users, [])
+  key_spec                               = try(each.value.key_spec, var.defaults.key_spec, null)
   key_statements                         = try(each.value.key_statements, var.defaults.key_statements, null)
   key_symmetric_encryption_users         = try(each.value.key_symmetric_encryption_users, var.defaults.key_symmetric_encryption_users, [])
   key_usage                              = try(each.value.key_usage, var.defaults.key_usage, null)
