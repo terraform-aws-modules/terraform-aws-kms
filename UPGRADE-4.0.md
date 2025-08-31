@@ -56,7 +56,7 @@ The following examples demonstrate some of the changes that users can elect to m
 
 ```hcl
 module "kms" {
-  source  = "terraform-aws-modules/rds/aws"
+  source  = "terraform-aws-modules/kms/aws"
   version = "~> 3.0"
 
   # Only the affected attributes are shown
@@ -112,7 +112,7 @@ module "kms" {
 
 ```hcl
 module "kms" {
-  source  = "terraform-aws-modules/rds/aws"
+  source  = "terraform-aws-modules/kms/aws"
   version = "~> 4.0"
 
   key_statements = [
