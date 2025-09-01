@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.1.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v4.0.0...v4.1.0) (2025-09-01)
+
+
+### Features
+
+* Add `key_spec` to external key and add upgrade to v4 readme ([#38](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/38)) ([e0171db](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/e0171db13c467d93e79e2bd82981ba3b207dfe6d))
+
 ## [4.0.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v3.1.1...v4.0.0) (2025-07-05)
 
 
