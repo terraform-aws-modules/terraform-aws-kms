@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.2.0](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v4.1.1...v4.2.0) (2026-01-08)
+
+### Features
+
+* Add provider meta user-agent ([#43](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/43)) ([496d8bd](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/496d8bd559afebb43b78af0034ec74d8b32378ca))
+
 ## [4.1.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v4.1.0...v4.1.1) (2025-10-21)
 
 ### Bug Fixes
