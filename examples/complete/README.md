@@ -23,20 +23,20 @@ Note that this example may create resources which will incur monetary charges on
 ## Requirements
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.7 |
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6.28 |
 
 ## Providers
 
 | Name | Version |
-|------|---------|
+| ---- | ------- |
 | <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6.28 |
 
 ## Modules
 
 | Name | Source | Version |
-|------|--------|---------|
+| ---- | ------ | ------- |
 | <a name="module_kms_complete"></a> [kms\_complete](#module\_kms\_complete) | ../.. | n/a |
 | <a name="module_kms_default"></a> [kms\_default](#module\_kms\_default) | ../.. | n/a |
 | <a name="module_kms_disabled"></a> [kms\_disabled](#module\_kms\_disabled) | ../.. | n/a |
@@ -50,7 +50,7 @@ Note that this example may create resources which will incur monetary charges on
 ## Resources
 
 | Name | Type |
-|------|------|
+| ---- | ---- |
 | [aws_iam_role.lambda](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
 | [aws_caller_identity.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity) | data source |
 
@@ -61,7 +61,7 @@ No inputs.
 ## Outputs
 
 | Name | Description |
-|------|-------------|
+| ---- | ----------- |
 | <a name="output_complete_aliases"></a> [complete\_aliases](#output\_complete\_aliases) | A map of aliases created and their attributes |
 | <a name="output_complete_external_key_expiration_model"></a> [complete\_external\_key\_expiration\_model](#output\_complete\_external\_key\_expiration\_model) | Whether the key material expires. Empty when pending key material import, otherwise `KEY_MATERIAL_EXPIRES` or `KEY_MATERIAL_DOES_NOT_EXPIRE` |
 | <a name="output_complete_external_key_state"></a> [complete\_external\_key\_state](#output\_complete\_external\_key\_state) | The state of the CMK |
