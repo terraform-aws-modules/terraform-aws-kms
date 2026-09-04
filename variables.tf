@@ -86,6 +86,12 @@ variable "multi_region" {
   default     = false
 }
 
+variable "attach_policy" {
+  description = "Attach and manage the policy for the the KMS key. If set to `false`, the default policy will be attached instead which will be left unmanaged"
+  type        = bool
+  default     = true
+}
+
 variable "policy" {
   description = "A valid policy JSON document. Although this is a key policy, not an IAM policy, an `aws_iam_policy_document`, in the form that designates a principal, can be used"
   type        = string

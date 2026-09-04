@@ -29,10 +29,13 @@ resource "aws_kms_key" "this" {
   is_enabled                         = var.is_enabled
   key_usage                          = var.key_usage
   multi_region                       = var.multi_region
-  policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
   rotation_period_in_days            = var.rotation_period_in_days
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [policy]
+  }
 }
 
 ################################################################################
@@ -52,10 +55,13 @@ resource "aws_kms_external_key" "this" {
   key_spec                           = var.key_spec
   key_usage                          = var.key_usage
   multi_region                       = var.multi_region
-  policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
   valid_to                           = var.valid_to
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [policy]
+  }
 }
 
 ################################################################################
@@ -72,9 +78,12 @@ resource "aws_kms_replica_key" "this" {
   description                        = var.description
   primary_key_arn                    = var.primary_key_arn
   enabled                            = var.is_enabled
-  policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [policy]
+  }
 }
 
 ################################################################################
@@ -91,11 +100,14 @@ resource "aws_kms_replica_external_key" "this" {
   description                        = var.description
   enabled                            = var.is_enabled
   key_material_base64                = var.key_material_base64
-  policy                             = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
   primary_key_arn                    = var.primary_external_key_arn
   valid_to                           = var.valid_to
 
   tags = var.tags
+
+  lifecycle {
+    ignore_changes = [policy]
+  }
 }
 
 ################################################################################
@@ -450,6 +462,18 @@ data "aws_iam_policy_document" "this" {
       }
     }
   }
+}
+
+resource "aws_kms_key_policy" "this" {
+  count = length(coalesce(
+    flatten([aws_kms_key.this, aws_kms_external_key.this, aws_kms_replica_key.this, aws_kms_replica_external_key.this])
+  )) == 1 && var.attach_policy ? 1 : 0
+
+  region = var.region
+  key_id = one(coalesce(
+    flatten([aws_kms_key.this, aws_kms_external_key.this, aws_kms_replica_key.this, aws_kms_replica_external_key.this])
+  )[*].id)
+  policy = coalesce(var.policy, data.aws_iam_policy_document.this[0].json)
 }
 
 ################################################################################

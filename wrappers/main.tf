@@ -5,6 +5,7 @@ module "wrapper" {
 
   aliases                                = try(each.value.aliases, var.defaults.aliases, [])
   aliases_use_name_prefix                = try(each.value.aliases_use_name_prefix, var.defaults.aliases_use_name_prefix, false)
+  attach_policy                          = try(each.value.attach_policy, var.defaults.attach_policy, true)
   bypass_policy_lockout_safety_check     = try(each.value.bypass_policy_lockout_safety_check, var.defaults.bypass_policy_lockout_safety_check, null)
   computed_aliases                       = try(each.value.computed_aliases, var.defaults.computed_aliases, {})
   create                                 = try(each.value.create, var.defaults.create, true)
