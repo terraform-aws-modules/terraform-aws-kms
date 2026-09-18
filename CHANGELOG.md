@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [4.2.2](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v4.2.1...v4.2.2) (2026-09-18)
+
+### Bug Fixes
+
+* Document known Terraform/OpenTofu limitations in README ([#48](https://github.com/terraform-aws-modules/terraform-aws-kms/issues/48)) ([390aaec](https://github.com/terraform-aws-modules/terraform-aws-kms/commit/390aaec217cd8c70491ae37b8cfa205dc72405f5))
+
 ## [4.2.1](https://github.com/terraform-aws-modules/terraform-aws-kms/compare/v4.2.0...v4.2.1) (2026-08-06)
 
 ### Bug Fixes
