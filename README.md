@@ -152,21 +152,22 @@ the same request for OpenTofu.
   `deletion_window_in_days` to 30, which this module already exposes, so a
   scheduled deletion can be cancelled.
 
-[compliance.tf](https://compliance.tf/docs/workarounds/terraform-aws-kms/?utm_source=github&utm_medium=readme&utm_campaign=known-limitations) serves this module with these rules applied at
-download time, on top of whatever your organization already has enabled there.
-Inputs and outputs do not change; the `source` line does. Drop the `version`
-argument and pin the release you use by adding `&version=` and that release
-number to the URL. To get started, register a free compliance.tf account and
-configure an access token:
+Compliance.tf serves this module with these rules applied at download time, on
+top of whatever your organization already has enabled there. Inputs and outputs
+do not change; the `source` line does. Drop the `version` argument and pin the
+release you use by adding `&version=` and that release number to the URL. To
+get started, register a free compliance.tf account and configure an access
+token:
 
     source = "https://registry.compliance.tf/terraform-aws-modules/kms/aws?add_rules=lifecycle_prevent_destroy_encryption"
 
-The page behind that link has the full workaround for each item above and the
-exact diff each rule makes. To see the diff before touching a `source` line,
-open this module in the Rules Playground at the version it pins for it:
-https://registry.compliance.tf/playground?module=terraform-aws-modules/kms/aws&rules=lifecycle_prevent_destroy_encryption - no account needed.
+The full workaround for each item above, and the exact diff each rule makes,
+are in the [compliance.tf docs for this module](https://compliance.tf/docs/workarounds/terraform-aws-kms/?utm_source=github&utm_medium=readme&utm_campaign=known-limitations). To preview a
+diff without an account, open this module in the
+[Rules Playground](https://registry.compliance.tf/playground?module=terraform-aws-modules/kms/aws&rules=lifecycle_prevent_destroy_encryption).
 
-Disclosure: written by this module's maintainer, who also builds compliance.tf.
+Disclosure: written by this module's maintainer, who also builds
+[compliance.tf](https://compliance.tf/?utm_source=github&utm_medium=readme&utm_campaign=known-limitations).
 
 <!-- END_KNOWN_LIMITATIONS -->
 
